@@ -12,7 +12,13 @@ import {
   Link,
   useMatch,
   useResolvedPath,
+  Route,
+  Routes,
+  Navigate,
 } from "react-router-dom";
+import Activities from "./pages/Activities";
+import Dashboard from "./pages/Dashboard";
+import Products from "./pages/Products";
 
 function App() {
   const [contentWrapperHeight, setContentWrapperHeight] = useState(0);
@@ -35,12 +41,12 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="body-wrapper">
+      <div className="canvas">
         <div
           className="content-wrapper"
           style={{ height: contentWrapperHeight }}
         >
-          <div className="nav-bar">
+          <div className="nav-wrapper">
             <div className="logo-wrapper">
               <img src={logo} className="app-logo" alt="logo" />
               <h1>Store.</h1>
@@ -94,6 +100,14 @@ function App() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="main-wrapper">
+            <Routes>
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/activities" element={<Activities />} />
+            </Routes>
           </div>
         </div>
       </div>
