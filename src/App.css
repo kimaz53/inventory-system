@@ -1,38 +1,116 @@
-.App {
-  text-align: center;
+* {
+    box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.body-wrapper {
+    width: 100%;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.content-wrapper {
+    overflow: hidden;
+    width: 93.5%;
+    background: #F2F2F2;
+    box-shadow: 0px 0px 0.78vw rgba(0, 0, 0, 0.2);
+    border-radius: 1.95vw;
+    position: absolute;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.nav-bar {
+    height: 100%;
+    width: 20%;
+    left: 0vw;
+    top: 0vw;
+    background: #FFFFFF;
+    border-radius: 1.95vw 0px 0px 1.95vw;
+    box-shadow: 0px 0px 0.78vw rgba(0, 0, 0, 0.25);
 }
 
-.App-link {
-  color: #61dafb;
+.app-logo {
+    height: 2.34vw;
+    width: 2.5vw;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.logo-wrapper {
+    padding-top: 2%;
+    padding-left: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logo-wrapper h1 {
+    font-family: "Segoe UI";
+    font-style: normal;
+    font-size: 2vw;
+    font-weight: 700;
+    padding-left: 0.39vw;
+    color: #47A515;
+}
+
+.menu-wrapper h1 {
+    font-family: "Segoe UI";
+    font-style: normal;
+    font-size: 2vw;
+    font-weight: 700;
+    color: #7E7E7E;
+    padding-left: 10%;
+
+}
+
+.db-wrapper {
+    padding-left: 5%;
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+}
+
+.db-icon {
+    color: #A6A6A6;
+}
+
+.menu-wrapper a {
+    text-decoration: none;
+    font-size: 1.5vw;
+    color: #A6A6A6;
+}
+
+.btn-container {
+    width: 15vw;
+    height: 4vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.db-wrapper li.active a {
+    color: #47A515;
+}
+
+.db-wrapper svg {
+    color: #A6A6A6;
+}
+
+.db-wrapper .active svg {
+    color: #47A515;
+}
+
+.db-wrapper a {
+    margin-left: 0.5vw;
+}
+
+.rectangle {
+    margin-top: 0.5vw;
+    width: 10vw;
+    height: 0.5vw;
+    background-color: #47A515;
+    border-radius: 1vw;
+}
+
+.link-wrapper {
+    display: flex;
+    align-items: center;
 }
