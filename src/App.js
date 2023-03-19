@@ -19,6 +19,7 @@ import {
 import Activities from "./pages/Activities";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
+import History from "./pages/subpages/History";
 
 function App() {
   const [contentWrapperHeight, setContentWrapperHeight] = useState(0);
