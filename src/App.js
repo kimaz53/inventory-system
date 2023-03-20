@@ -19,7 +19,8 @@ import {
 import Activities from "./pages/Activities";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
-import History from "./pages/subpages/History";
+import Login from "./pages/Login";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const [contentWrapperHeight, setContentWrapperHeight] = useState(0);
@@ -104,10 +105,13 @@ function App() {
           </div>
           <div className="main-wrapper">
             <Routes>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/products" element={<Products />} />
               <Route path="/activities" element={<Activities />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/error" element={<ErrorPage />} />
+              <Route path="/" element={<Navigate to="/login" replace />} />
+              <Route path="*" element={<Navigate to="/error" replace />} />
             </Routes>
           </div>
         </div>
