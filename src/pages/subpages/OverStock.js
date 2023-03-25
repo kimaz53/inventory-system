@@ -6,8 +6,8 @@ export default function OverStock() {
   const navigate = useNavigate();
 
   return (
-    <div className="overstock-container">
-      <div className="overstock-content-wrapper">
+    <div className="stock-container">
+      <div className="stock-content-wrapper">
         <div onClick={() => navigate(-1)} className="back-btn">
           <IoChevronBackOutline color="#FFFFFF" size="2vw" />
         </div>

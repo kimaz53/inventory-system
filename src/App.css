@@ -545,7 +545,7 @@
     justify-content: center;
 }
 
-.overstock-content-wrapper {
+.stock-content-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -553,11 +553,11 @@
     margin-left: 3vw;
 }
 
-.overstock-content-wrapper h1 {
+.stock-content-wrapper h1 {
     font-size: 1.5vw;
 }
 
-.overstock-container {
+.stock-container {
     display: flex;
     flex-direction: column;
 }
