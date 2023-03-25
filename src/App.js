@@ -1,8 +1,6 @@
 import "./App.css";
 import "@fontsource/inter";
-
 import { BrowserRouter } from "react-router-dom";
-
 import Main from "./Main";
 
 function App() {
