@@ -405,3 +405,159 @@
     font-size: 1vw;
     color: #47A515;
 }
+
+.desc-nav {
+    margin-top: -1.5vw;
+}
+
+.desc-nav h1 {
+    color: #7E7E7E;
+    font-size: 2vw;
+    margin-bottom: -1.5vw;
+}
+
+.desc-nav p {
+    color: #A6A6A6;
+    font-size: 1.5vw;
+}
+
+.desc-nav h1 {
+    text-align: left;
+}
+
+.calendar-btns {
+    margin-top: 2.5vw;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    width: 69vw;
+}
+
+.prev-btn {
+    width: 3.5vw;
+    height: 3.5vw;
+    background-color: #7E7E7E;
+    border-radius: 0.5vw 0vw 0vw 0.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.next-btn {
+    width: 3.5vw;
+    height: 3.5vw;
+    background-color: #7E7E7E;
+    border-radius: 0vw 0.5vw 0.5vw 0vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.today-btn {
+    width: 7.5vw;
+    height: 3.5vw;
+    background-color: #A1A1A1;
+    border-radius: 0.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.today-btn p {
+    font-size: 1vw;
+    color: #FFFFFF;
+}
+
+.date-wrapper h1 {
+    font-size: 2vw;
+    color: #7E7E7E;
+}
+
+.month-btn {
+    width: 5vw;
+    height: 3.5vw;
+    background-color: #7E7E7E;
+    border-radius: 0.5vw 0vw 0vw 0.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-size: 1vw;
+}
+
+.week-btn {
+    width: 5vw;
+    height: 3.5vw;
+    background-color: #A1A1A1;
+    border-radius: 0vw 0vw 0vw 0vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-size: 1vw;
+}
+
+.day-btn {
+    width: 5vw;
+    height: 3.5vw;
+    background-color: #A1A1A1;
+    border-radius: 0vw 0.5vw 0.5vw 0vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    font-size: 1vw;
+}
+
+.prev-next-btn {
+    display: flex;
+    flex-direction: row;
+}
+
+.month-week-day {
+    display: flex;
+    flex-direction: row;
+}
+
+.next-btn:hover,
+.prev-btn:hover,
+.today-btn:hover,
+.month-btn:hover,
+.week-btn:hover,
+.day-btn:hover,
+.back-btn:hover {
+    cursor: pointer;
+}
+
+.dashboard-cards {
+    display: flex;
+    flex-direction: column;
+}
+
+.back-btn {
+    width: 2.5vw;
+    height: 2.5vw;
+    background-color: #47A515;
+    border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overstock-content-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 2vw;
+    margin-left: 3vw;
+}
+
+.overstock-content-wrapper h1 {
+    font-size: 1.5vw;
+}
+
+.overstock-container {
+    display: flex;
+    flex-direction: column;
+}
