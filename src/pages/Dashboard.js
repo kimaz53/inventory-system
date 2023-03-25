@@ -5,6 +5,7 @@ export default function Dashboard() {
     <div>
       <h1>Dashboard</h1>
       <div className="dashboard-cards">
+        <Link to="/products">All Products</Link>
         <Link to="/dashboard/nostock">Products out of Stock</Link>
         <Link to="/dashboard/overstock">Products overstocked</Link>
       </div>
