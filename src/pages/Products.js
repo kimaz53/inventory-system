@@ -1,5 +1,5 @@
 import "../App.css";
-import Products_Table from "./subpages/Products_Table";
+import ProductsTable from "./subpages/ProductsTable";
 import History from "./subpages/History";
 
 import React, { useState } from "react";
@@ -121,7 +121,7 @@ export default function Products() {
       </div>
 
       <div className="main-product-wrapper">
-        {showProducts ? <Products_Table /> : null}
+        {showProducts ? <ProductsTable /> : null}
         {showHistory ? <History /> : null}
       </div>
     </div>
