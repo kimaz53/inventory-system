@@ -743,3 +743,30 @@
 .no-data p {
     color: #A6A6A6;
 }
+
+.dashboard-cards {
+    color: #A6A6A6;
+}
+
+
+.bags-data-img {
+    height: 150px;
+    width: 150px;
+}
+
+.more-products-btn {
+    text-decoration: none;
+    color: #47A515;
+    margin-left: 90px;
+    font-size: 24px;
+}
+
+.image-and-button {
+    display: flex;
+    flex-direction: column;
+    margin-right: 25px;
+}
+
+.cards-container {
+    display: flex;
+}
