@@ -728,6 +728,7 @@
         height: 100px;
         width: 72.77px;
     }
+
     .no-data p {
         font-size: 10px;
     }
@@ -744,10 +745,45 @@
     color: #A6A6A6;
 }
 
-.dashboard-cards {
-    color: #A6A6A6;
+.parent-div {
+    width: 406.96px;
+    height: 217.22px;
+    border-radius: 10px;
+
+    background-color: #E4EAE6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 50px;
 }
 
+.sub-parent {
+    display: flex;
+    flex-direction: column;
+    margin-left: 25px;
+}
+
+.sub-parent h1 {
+    color: #7E7E7E;
+    font-size: 36px;
+    margin-bottom: 5px;
+}
+
+.data-txt {
+    margin-bottom: 50px;
+}
+
+
+.sub-parent p {
+    color: #5D5353;
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.title-txt {
+    margin-top: 50px;
+}
 
 .bags-data-img {
     height: 150px;
