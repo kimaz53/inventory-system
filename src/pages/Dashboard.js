@@ -1,6 +1,8 @@
 import "../App.css";
 import { Link } from "react-router-dom";
 import bags from "../../src/bags.png";
+import boxes from "../../src/boxes.png";
+import emptyboxes from "../../src/emptybox.png";
 import {
   IoSearchOutline,
   IoPersonCircleOutline,
@@ -52,7 +54,7 @@ export default function Dashboard() {
               <p>products</p>
             </div>
             <div className="data-txt">
-              <h1>123</h1>
+              <h1>99</h1>
             </div>
           </div>
 
@@ -67,16 +69,16 @@ export default function Dashboard() {
         <div className="parent-div">
           <div className="sub-parent">
             <div className="title-txt">
-              <p>Count of all</p>
-              <p>products</p>
+              <p>Products Out </p>
+              <p>of Stock</p>
             </div>
             <div className="data-txt">
-              <h1>123</h1>
+              <h1>0</h1>
             </div>
           </div>
 
           <div className="image-and-button">
-            <img src={bags} className="bags-data-img" alt="logo" />
+            <img src={emptyboxes} className="bags-data-img" alt="logo" />
             <Link className="more-products-btn" to="/products">
               More
             </Link>
@@ -86,16 +88,16 @@ export default function Dashboard() {
         <div className="parent-div">
           <div className="sub-parent">
             <div className="title-txt">
-              <p>Count of all</p>
-              <p>products</p>
+            <p>Products</p>
+            <p>Overstock</p>
             </div>
             <div className="data-txt">
-              <h1>123</h1>
+              <h1>150</h1>
             </div>
           </div>
 
           <div className="image-and-button">
-            <img src={bags} className="bags-data-img" alt="logo" />
+            <img src={boxes} className="bags-data-img" alt="logo" />
             <Link className="more-products-btn" to="/products">
               More
             </Link>
