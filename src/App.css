@@ -977,3 +977,154 @@
     background-color: #DD1F58;
     border-radius: 1vw;
 }
+
+.notification-container {
+    background-color: #FFFFFF;
+    height: 75vh;
+    width: 25vw;
+    margin-top: 5vw;
+    margin-left: 48.5vw;
+    position: fixed;
+    z-index: 1;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.notification-container h1 {
+    font-weight: 700;
+    font-size: 2vw;
+    padding: 0px 0px 0px 20px;
+}
+
+.item-container {
+    display: flex;
+    margin-top: 1vw;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 55vh;
+    align-items: center;
+}
+
+.item-wrap:hover {
+    cursor: pointer;
+}
+
+.image-size {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.item-wrap {
+    flex-direction: row;
+    padding: 1vw;
+    margin-bottom: 15px;
+    display: flex;
+    width: 22.5vw;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.item-txt {
+    margin-left: 20px;
+}
+
+.all-btn {
+    background: #47A515;
+    border-radius: 25px;
+    width: 3.5vw;
+    height: 2.5vw;
+    border: none;
+    color: #5D5353;
+    font-size: 1vw;
+    font-weight: 400;
+}
+
+.unread-btn {
+    background: #F2F2F2;
+    border-radius: 25px;
+    width: 7vw;
+    height: 2.5vw;
+    border: none;
+    color: #5D5353;
+    font-size: 1vw;
+    font-weight: 400;
+    margin-left: 0.5vw;
+}
+
+.all-btn:hover,
+.unread-btn:hover {
+    cursor: pointer;
+}
+
+.mark-all-btn {
+    background: none;
+    border-radius: 25px;
+    width: 10vw;
+    height: 2.5vw;
+    border: none;
+    color: #47A515;
+    font-size: 1vw;
+    font-weight: 400;
+    margin-left: 2vw;
+    text-decoration: none;
+}
+
+.notif-btns {
+    margin-left: 1.5vw;
+}
+
+.unread-circle {
+    height: 1vw;
+    width: 1vw;
+    background-color: #47A515;
+    border-radius: 1vw;
+    margin-left: 5vw;
+}
+
+@media (max-width: 800px) {
+    .notification-container {
+        height: 85vh;
+        width: 50vw;
+        margin-top: 2vh;
+        margin-left: 23.5vw;
+        font-size: 1.5vw;
+    }
+
+    .notification-container h1 {
+        font-size: 2.5vw;
+    }
+
+    .item-container {
+        height: 70vh;
+    }
+
+    .image-size {
+        height: 10vw;
+        width: 10vw;
+    }
+
+    .item-wrap {
+        width: 45vw;
+        margin-left: 12.5vw;
+        margin-bottom: 2vw;
+    }
+
+    .item-txt {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .all-btn,
+    .unread-btn,
+    .mark-all-btn {
+        width: 20vw;
+        height: 5vw;
+        font-size: 2vw;
+        margin-left: 1vw;
+    }
+}
