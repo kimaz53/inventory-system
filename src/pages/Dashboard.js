@@ -79,7 +79,7 @@ export default function Dashboard() {
 
           <div className="image-and-button">
             <img src={emptyboxes} className="bags-data-img" alt="logo" />
-            <Link className="more-products-btn" to="/dashboard/overstock">
+            <Link className="more-products-btn" to="/dashboard/nostock">
               More
             </Link>
           </div>
@@ -98,7 +98,7 @@ export default function Dashboard() {
 
           <div className="image-and-button">
             <img src={boxes} className="bags-data-img" alt="logo" />
-            <Link className="more-products-btn" to="/dashboard/nostock">
+            <Link className="more-products-btn" to="/dashboard/overstock">
               More
             </Link>
           </div>
