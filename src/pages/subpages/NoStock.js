@@ -117,7 +117,7 @@ export default function NoStock() {
                   <img src={item.image} alt={item.title} className="image" />
                 </div>
                 <div className="bottom-container">
-                  <div className="item-container">
+                  <div className="items-container">
                     <h2>{item.title}</h2>
                     <p
                       style={{
