@@ -22,6 +22,7 @@ import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
 import NoStock from "./pages/subpages/NoStock";
 import OverStock from "./pages/subpages/OverStock";
+import { IoFileTrayOutline, IoFileTrayFullOutline } from "react-icons/io5";
 
 function Main() {
   const [contentWrapperHeight, setContentWrapperHeight] = useState(0);
@@ -42,6 +43,8 @@ function Main() {
     };
   }, []);
 
+  const [notifOpen, setNotifOpen] = useState(false);
+
   return (
     <div className="canvas">
       <div className="content-wrapper" style={{ height: contentWrapperHeight }}>
@@ -54,10 +57,7 @@ function Main() {
             <h1>Menu</h1>
             <div className="db-wrapper">
               <div className="db-wrapper">
-                <div
-                  style={{ flexDirection: "column" }}
-                  className="btn-container"
-                >
+                <div className="btn-container">
                   <CustomLink
                     to="/dashboard"
                     icon={(isActive) =>
@@ -67,10 +67,14 @@ function Main() {
                         <AiOutlineDashboard color="#A6A6A6" size="1.5vw" />
                       )
                     }
+                    onClick={() => {
+                      setNotifOpen(false);
+                    }}
                   >
                     Dashboard
                   </CustomLink>
                 </div>
+
                 <div className="btn-container">
                   <CustomLink
                     to="/products"
@@ -81,10 +85,60 @@ function Main() {
                         <AiOutlineBars color="#A6A6A6" size="1.5vw" />
                       )
                     }
+                    onClick={() => {
+                      setNotifOpen(true);
+                    }}
                   >
                     Products
                   </CustomLink>
                 </div>
+
+                {notifOpen && (
+                  <div>
+                    <div
+                      style={{ marginLeft: "0.5vw" }}
+                      className="btn-container"
+                    >
+                      <CustomLink
+                        to="/products/nostock"
+                        icon={(isActive) =>
+                          isActive ? (
+                            <IoFileTrayOutline color="#47A515" size="1.5vw" />
+                          ) : (
+                            <IoFileTrayOutline color="#A6A6A6" size="1.5vw" />
+                          )
+                        }
+                      >
+                        Out of Stock
+                      </CustomLink>
+                    </div>
+
+                    <div
+                      style={{ marginLeft: "0.5vw" }}
+                      className="btn-container"
+                    >
+                      <CustomLink
+                        to="/products/overstock"
+                        icon={(isActive) =>
+                          isActive ? (
+                            <IoFileTrayFullOutline
+                              color="#47A515"
+                              size="1.5vw"
+                            />
+                          ) : (
+                            <IoFileTrayFullOutline
+                              color="#A6A6A6"
+                              size="1.5vw"
+                            />
+                          )
+                        }
+                      >
+                        Overstocked
+                      </CustomLink>
+                    </div>
+                  </div>
+                )}
+
                 <div className="btn-container">
                   <CustomLink
                     to="/activities"
@@ -95,6 +149,9 @@ function Main() {
                         <AiOutlineCalendar color="#A6A6A6" size="1.5vw" />
                       )
                     }
+                    onClick={() => {
+                      setNotifOpen(false);
+                    }}
                   >
                     Activities
                   </CustomLink>
@@ -112,8 +169,8 @@ function Main() {
             <Route path="/error" element={<ErrorPage />} />
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="*" element={<Navigate to="/error" replace />} />
-            <Route path="/dashboard/nostock" element={<NoStock />} />
-            <Route path="/dashboard/overstock" element={<OverStock />} />
+            <Route path="/products/nostock" element={<NoStock />} />
+            <Route path="/products/overstock" element={<OverStock />} />
           </Routes>
         </div>
       </div>
@@ -121,15 +178,21 @@ function Main() {
   );
 }
 
-function CustomLink({ to, icon, children, ...props }) {
+function CustomLink({ to, icon, children, onClick, ...props }) {
   const resolvedPath = useResolvedPath(to);
-  const isActive = useMatch({ path: resolvedPath.pathname, end: null });
+  const isActive = useMatch({ path: resolvedPath.pathname, start: null });
+
+  const handleClick = (event) => {
+    if (onClick) {
+      onClick(event);
+    }
+  };
 
   return (
-    <li className={ isActive ?  "active" : ""}>
+    <li className={isActive ? "active" : ""}>
       <div className="link-wrapper">
         {icon(isActive)}
-        <Link to={to} {...props}>
+        <Link to={to} onClick={handleClick} {...props}>
           {children}
         </Link>
       </div>

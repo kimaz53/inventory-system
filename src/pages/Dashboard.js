@@ -140,9 +140,13 @@ export default function Dashboard() {
       const selectedItem = data.find((item) => item.id === selectedItemId);
       if (selectedItem) {
         if (selectedItem.stocks > 0) {
-          navigate("/dashboard/overstock", { state: { selectedItemId } });
+          navigate("/products/overstock", {
+            state: { selectedItemId },
+          });
         } else {
-          navigate("/dashboard/nostock", { state: { selectedItemId } });
+          navigate("/products/nostock", {
+            state: { selectedItemId },
+          });
         }
       }
     }
@@ -365,7 +369,7 @@ export default function Dashboard() {
 
           <div className="image-and-button">
             <img src={emptyboxes} className="cards-data-img" alt="logo" />
-            <Link className="more-products-btn" to="/dashboard/nostock">
+            <Link className="more-products-btn" to="/products/nostock">
               More
             </Link>
           </div>
@@ -384,7 +388,7 @@ export default function Dashboard() {
 
           <div className="image-and-button">
             <img src={boxes} className="cards-data-img" alt="logo" />
-            <Link className="more-products-btn" to="/dashboard/overstock">
+            <Link className="more-products-btn" to="/products/overstock">
               More
             </Link>
           </div>
