@@ -12,6 +12,7 @@ import {
 import { useState, useEffect, useRef } from "react";
 import ColorThief from "colorthief";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -123,6 +124,7 @@ export default function Dashboard() {
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   const handleItemClick = (id) => {
+    dispatch({ type: "SET_SELECTED_ITEM_ID", payload: id });
     setData((prevData) => {
       const newData = [...prevData];
       const itemIndex = newData.findIndex((item) => item.id === id);
@@ -134,6 +136,8 @@ export default function Dashboard() {
       return prevData;
     });
   };
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (selectedItemId) {

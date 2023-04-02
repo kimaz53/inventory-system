@@ -2,12 +2,16 @@ import "./App.css";
 import "@fontsource/inter";
 import { BrowserRouter } from "react-router-dom";
 import Main from "./Main";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Main />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Main />
+      </BrowserRouter>
+    </Provider>
   );
 }
 

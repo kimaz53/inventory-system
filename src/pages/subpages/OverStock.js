@@ -8,6 +8,7 @@ import {
 import ColorThief from "colorthief";
 import { useState, useEffect, useRef } from "react";
 import noData from "../../../src/noData.png";
+import { useDispatch } from "react-redux";
 
 const data = [
   {
@@ -104,6 +105,9 @@ export default function OverStock() {
   const [selectedItem, setSelectedItem] = useState(
     location.state?.selectedItemId
   );
+
+  const dispatch = useDispatch();
+  dispatch({ type: "SET_SELECTED_ITEM_ID", payload: selectedItem });
 
   const handleQtyChanges = (itemId, value) => {
     setQty(qty + value);
