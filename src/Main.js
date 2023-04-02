@@ -43,8 +43,6 @@ function Main() {
     };
   }, []);
 
-  const [notifOpen, setNotifOpen] = useState(false);
-
   return (
     <div className="canvas">
       <div className="content-wrapper" style={{ height: contentWrapperHeight }}>
@@ -67,9 +65,6 @@ function Main() {
                         <AiOutlineDashboard color="#A6A6A6" size="1.5vw" />
                       )
                     }
-                    onClick={() => {
-                      setNotifOpen(false);
-                    }}
                   >
                     Dashboard
                   </CustomLink>
@@ -85,59 +80,42 @@ function Main() {
                         <AiOutlineBars color="#A6A6A6" size="1.5vw" />
                       )
                     }
-                    onClick={() => {
-                      setNotifOpen(true);
-                    }}
                   >
                     Products
                   </CustomLink>
                 </div>
 
-                {notifOpen && (
-                  <div>
-                    <div
-                      style={{ marginLeft: "0.5vw" }}
-                      className="btn-container"
+                <div>
+                  <div className="btn-container">
+                    <CustomLink
+                      to="/products/nostock"
+                      icon={(isActive) =>
+                        isActive ? (
+                          <IoFileTrayOutline color="#47A515" size="1.5vw" />
+                        ) : (
+                          <IoFileTrayOutline color="#A6A6A6" size="1.5vw" />
+                        )
+                      }
                     >
-                      <CustomLink
-                        to="/products/nostock"
-                        icon={(isActive) =>
-                          isActive ? (
-                            <IoFileTrayOutline color="#47A515" size="1.5vw" />
-                          ) : (
-                            <IoFileTrayOutline color="#A6A6A6" size="1.5vw" />
-                          )
-                        }
-                      >
-                        Out of Stock
-                      </CustomLink>
-                    </div>
-
-                    <div
-                      style={{ marginLeft: "0.5vw" }}
-                      className="btn-container"
-                    >
-                      <CustomLink
-                        to="/products/overstock"
-                        icon={(isActive) =>
-                          isActive ? (
-                            <IoFileTrayFullOutline
-                              color="#47A515"
-                              size="1.5vw"
-                            />
-                          ) : (
-                            <IoFileTrayFullOutline
-                              color="#A6A6A6"
-                              size="1.5vw"
-                            />
-                          )
-                        }
-                      >
-                        Overstocked
-                      </CustomLink>
-                    </div>
+                      Out of Stock
+                    </CustomLink>
                   </div>
-                )}
+
+                  <div className="btn-container">
+                    <CustomLink
+                      to="/products/overstock"
+                      icon={(isActive) =>
+                        isActive ? (
+                          <IoFileTrayFullOutline color="#47A515" size="1.5vw" />
+                        ) : (
+                          <IoFileTrayFullOutline color="#A6A6A6" size="1.5vw" />
+                        )
+                      }
+                    >
+                      Overstocked
+                    </CustomLink>
+                  </div>
+                </div>
 
                 <div className="btn-container">
                   <CustomLink
@@ -149,9 +127,6 @@ function Main() {
                         <AiOutlineCalendar color="#A6A6A6" size="1.5vw" />
                       )
                     }
-                    onClick={() => {
-                      setNotifOpen(false);
-                    }}
                   >
                     Activities
                   </CustomLink>
