@@ -11,8 +11,11 @@ import {
 } from "react-icons/io5";
 import { useState, useEffect, useRef } from "react";
 import ColorThief from "colorthief";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   const [data, setData] = useState([
     {
       title: "Item 1",
@@ -94,7 +97,7 @@ export default function Dashboard() {
       const dominantColors = colors.map((color) => color.dominantColor);
       setDominantColors(dominantColors);
     });
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     let count = 0;
@@ -117,6 +120,7 @@ export default function Dashboard() {
       })
     );
   };
+  const [selectedItemId, setSelectedItemId] = useState(null);
 
   const handleItemClick = (id) => {
     setData((prevData) => {
@@ -124,10 +128,25 @@ export default function Dashboard() {
       const itemIndex = newData.findIndex((item) => item.id === id);
       if (itemIndex >= 0) {
         newData[itemIndex].unread = false;
+        setSelectedItemId(newData[itemIndex].id);
+        return newData;
       }
-      return newData;
+      return prevData;
     });
   };
+
+  useEffect(() => {
+    if (selectedItemId) {
+      const selectedItem = data.find((item) => item.id === selectedItemId);
+      if (selectedItem) {
+        if (selectedItem.stocks > 0) {
+          navigate("/dashboard/overstock", { state: { selectedItemId } });
+        } else {
+          navigate("/dashboard/nostock", { state: { selectedItemId } });
+        }
+      }
+    }
+  }, [selectedItemId, data, navigate]);
 
   const [unreadOnly, setUnreadOnly] = useState(false);
 
@@ -181,7 +200,7 @@ export default function Dashboard() {
               onClick={handleToggle}
               className="close-notif"
               color="#7E7E7E"
-              size="2vw"
+              size="2.5vw"
             />
           </div>
 
@@ -190,6 +209,7 @@ export default function Dashboard() {
               onClick={handleAllClick}
               className="all-btn"
               style={{ backgroundColor: !unreadOnly ? "#47A515" : "#F2F2F2" }}
+              selectedid={selectedItemId}
             >
               All
             </button>
@@ -325,7 +345,7 @@ export default function Dashboard() {
           </div>
 
           <div className="image-and-button">
-            <img src={bags} className="bags-data-img" alt="logo" />
+            <img src={bags} className="cards-data-img" alt="logo" />
             <Link className="more-products-btn" to="/products">
               More
             </Link>
@@ -344,7 +364,7 @@ export default function Dashboard() {
           </div>
 
           <div className="image-and-button">
-            <img src={emptyboxes} className="bags-data-img" alt="logo" />
+            <img src={emptyboxes} className="cards-data-img" alt="logo" />
             <Link className="more-products-btn" to="/dashboard/nostock">
               More
             </Link>
@@ -363,7 +383,7 @@ export default function Dashboard() {
           </div>
 
           <div className="image-and-button">
-            <img src={boxes} className="bags-data-img" alt="logo" />
+            <img src={boxes} className="cards-data-img" alt="logo" />
             <Link className="more-products-btn" to="/dashboard/overstock">
               More
             </Link>
