@@ -33,8 +33,15 @@ export default function Products() {
     setInputValue(event.target.value);
   };
 
+  const [openFilter, setOpenFilter] = useState(false);
+
   return (
     <div className="product-container">
+      {openFilter && (
+        <div className="filter-container">
+          <h1></h1>
+        </div>
+      )}
       <div className="product-nav-wrapper">
         <div
           className={`product-nav-btn ${
@@ -67,7 +74,7 @@ export default function Products() {
           <IoSearchOutline className="search-icon" color="#7E7E7E" size="2vw" />
         </div>
 
-        <div className="filter-btn">
+        <div className="filter-btn" onClick={() => setOpenFilter(!openFilter)}>
           <BiFilterAlt color="#7E7E7E" size="2vw" />
         </div>
       </div>
