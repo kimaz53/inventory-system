@@ -195,115 +195,124 @@ export default function Dashboard() {
   return (
     <div className="stock-container">
       {isOpen && (
-        <div className="notification-container" ref={ref}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <h1 style={{ color: "#7E7E7E" }}>Notifications</h1>
-            <IoCloseCircleOutline
-              onClick={handleToggle}
-              className="close-notif"
-              color="#7E7E7E"
-              size="2.5vw"
-            />
-          </div>
-
-          <div className="notif-btns">
-            <button
-              onClick={handleAllClick}
-              className="all-btn"
-              style={{ backgroundColor: !unreadOnly ? "#47A515" : "#F2F2F2" }}
-              selectedid={selectedItemId}
-            >
-              All
-            </button>
-            <button
-              onClick={handleUnreadClick}
-              className="unread-btn"
-              style={{ backgroundColor: unreadOnly ? "#47A515" : "#F2F2F2" }}
-            >
-              {unreadItems > 0 ? `Unread (${unreadItems})` : "Unread"}
-            </button>
-            <Link className="mark-all-btn" onClick={handleMarkAllAsRead}>
-              Mark All as Read
-            </Link>
-          </div>
-
-          <div>
+        <div>
+          <div className="close-btn" onClick={handleToggle}></div>
+          <div className="notification-container" ref={ref}>
             <div
               style={{
-                flexDirection: "row",
                 display: "flex",
+                flexDirection: "row",
                 alignItems: "center",
-                marginTop: "1vw",
-                justifyContent: "flex-start",
-                marginLeft: "2vw",
               }}
-              className="legend-container"
             >
-              <div stylye={{ color: "#5D5353" }} className="legend">
-                Legend:
-              </div>
+              <h1 style={{ color: "#7E7E7E" }}>Notifications</h1>
+              <IoCloseCircleOutline
+                onClick={handleToggle}
+                className="close-notif"
+                color="#7E7E7E"
+                size="2.5vw"
+              />
+            </div>
+
+            <div className="notif-btns">
+              <button
+                onClick={handleAllClick}
+                className="all-btn"
+                style={{ backgroundColor: !unreadOnly ? "#47A515" : "#F2F2F2" }}
+                selectedid={selectedItemId}
+              >
+                All
+              </button>
+              <button
+                onClick={handleUnreadClick}
+                className="unread-btn"
+                style={{ backgroundColor: unreadOnly ? "#47A515" : "#F2F2F2" }}
+              >
+                {unreadItems > 0 ? `Unread (${unreadItems})` : "Unread"}
+              </button>
+              <Link className="mark-all-btn" onClick={handleMarkAllAsRead}>
+                Mark All as Read
+              </Link>
+            </div>
+
+            <div>
               <div
                 style={{
                   flexDirection: "row",
                   display: "flex",
                   alignItems: "center",
+                  marginTop: "1vw",
+                  justifyContent: "flex-start",
+                  marginLeft: "2vw",
                 }}
+                className="legend-container"
               >
-                <div className="blue" />
-                <div
-                  style={{ color: "#1F99DD", marginLeft: "0.5vw" }}
-                  className="legend"
-                >
-                  Overstock
+                <div stylye={{ color: "#5D5353" }} className="legend">
+                  Legend:
                 </div>
-              </div>
-              <div
-                style={{
-                  flexDirection: "row",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <div className="red" />
                 <div
-                  style={{ color: "#DD1F58", marginLeft: "0.5vw" }}
-                  className="legend"
+                  style={{
+                    flexDirection: "row",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                 >
-                  Out of Stock
+                  <div className="blue" />
+                  <div
+                    style={{ color: "#1F99DD", marginLeft: "0.5vw" }}
+                    className="legend"
+                  >
+                    Overstock
+                  </div>
+                </div>
+                <div
+                  style={{
+                    flexDirection: "row",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className="red" />
+                  <div
+                    style={{ color: "#DD1F58", marginLeft: "0.5vw" }}
+                    className="legend"
+                  >
+                    Out of Stock
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="grid-items">
-            {filteredData.length === 0 && unreadItems === 0 && (
-              <div className="caught-up-message">
-                <p>You're All Caught Up.</p>
-              </div>
-            )}
-            {filteredData.map((item, index) => (
-              <div
-                style={{ backgroundColor: dominantColors[index] }}
-                className="item-wrap"
-                key={index}
-                onClick={() => handleItemClick(item.id)}
-              >
-                <img className="image-size" src={item.image} alt={item.title} />
-                <div className="item-txt">
-                  <p style={{ color: "#5D5353" }}>{item.title}</p>
-                  <p style={{ color: item.stocks > 0 ? "#1F99DD" : "#DD1F58" }}>
-                    {item.stocks} stocks available
-                  </p>
+            <div className="grid-items">
+              {filteredData.length === 0 && unreadItems === 0 && (
+                <div className="caught-up-message">
+                  <p>You're All Caught Up.</p>
                 </div>
-                {item.unread && <div className="unread-circle"></div>}
-              </div>
-            ))}
+              )}
+              {filteredData.map((item, index) => (
+                <div
+                  style={{ backgroundColor: dominantColors[index] }}
+                  className="item-wrap"
+                  key={index}
+                  onClick={() => handleItemClick(item.id)}
+                >
+                  <img
+                    className="image-size"
+                    src={item.image}
+                    alt={item.title}
+                  />
+                  <div className="item-txt">
+                    <p style={{ color: "#5D5353" }}>{item.title}</p>
+                    <p
+                      style={{ color: item.stocks > 0 ? "#1F99DD" : "#DD1F58" }}
+                    >
+                      {item.stocks} stocks available
+                    </p>
+                  </div>
+                  {item.unread && <div className="unread-circle"></div>}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
@@ -329,7 +338,7 @@ export default function Dashboard() {
         <div
           style={{ marginRight: "1vw", flexDirection: "column" }}
           className="filter-btn"
-          onClick={handleToggle}
+          onClick={() => setIsOpen(!isOpen)}
         >
           {unreadItems === 0 ? null : <div className="notifBall" />}
           <IoNotificationsOutline color="#7E7E7E" size="2vw" />

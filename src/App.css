@@ -1668,3 +1668,13 @@
     right: 0;
     margin: 5px 10px 10px 0vw;
 }
+
+.close-btn {
+    height: 5vw;
+    width: 5vw;
+    position: absolute;
+    right: 0;
+    margin-right: 9.4vw;
+    margin-top: 2vw;
+    z-index: 1;
+}
