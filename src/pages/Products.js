@@ -39,7 +39,7 @@ export default function Products() {
     <div className="product-container">
       {openFilter && (
         <div className="filter-container">
-          <h1></h1>
+          <h1>hello</h1>
         </div>
       )}
       <div className="product-nav-wrapper">
