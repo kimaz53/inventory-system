@@ -2,12 +2,12 @@ import "../App.css";
 import React, { useState } from "react";
 import {
   IoSearchOutline,
-  IoFilterOutline,
-  IoCalendarOutline,
   IoChevronBackOutline,
   IoChevronForwardOutline,
 } from "react-icons/io5";
 import ProductsTable from "./subpages/ProductsTable";
+import { BiFilterAlt } from "react-icons/bi";
+import { CiCalendar } from "react-icons/ci";
 
 export default function Activities() {
   const [inputValue, setInputValue] = useState("");
@@ -35,11 +35,11 @@ export default function Activities() {
           <IoSearchOutline className="search-icon" color="#7E7E7E" size="2vw" />
         </div>
         <div style={{ marginRight: "1vw" }} className="filter-btn">
-          <IoCalendarOutline color="#7E7E7E" size="2vw" />
+          <CiCalendar color="#7E7E7E" size="2vw" strokeWidth={0.5} />
         </div>
 
         <div className="filter-btn">
-          <IoFilterOutline color="#7E7E7E" size="2vw" />
+          <BiFilterAlt color="#7E7E7E" size="2vw" />
         </div>
       </div>
 

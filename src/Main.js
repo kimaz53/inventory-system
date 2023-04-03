@@ -5,7 +5,6 @@ import "@fontsource/inter";
 import {
   AiOutlineDashboard,
   AiOutlineBars,
-  AiOutlineCalendar,
 } from "react-icons/ai";
 import {
   Link,
@@ -23,6 +22,7 @@ import ErrorPage from "./pages/ErrorPage";
 import NoStock from "./pages/subpages/NoStock";
 import OverStock from "./pages/subpages/OverStock";
 import { IoFileTrayOutline, IoFileTrayFullOutline } from "react-icons/io5";
+import { CiCalendar } from "react-icons/ci";
 
 function Main() {
   const [contentWrapperHeight, setContentWrapperHeight] = useState(0);
@@ -122,9 +122,9 @@ function Main() {
                     to="/activities"
                     icon={(isActive) =>
                       isActive ? (
-                        <AiOutlineCalendar color="#47A515" size="1.5vw" />
+                        <CiCalendar color="#47A515" size="1.5vw" strokeWidth={0.5} />
                       ) : (
-                        <AiOutlineCalendar color="#A6A6A6" size="1.5vw" />
+                        <CiCalendar color="#A6A6A6" size="1.5vw" strokeWidth={0.5} />
                       )
                     }
                   >

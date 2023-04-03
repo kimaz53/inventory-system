@@ -5,10 +5,10 @@ import History from "./subpages/History";
 import React, { useState } from "react";
 import {
   IoSearchOutline,
-  IoFilterOutline,
   IoCloudUploadOutline,
   IoChevronDownOutline,
 } from "react-icons/io5";
+import { BiFilterAlt } from "react-icons/bi";
 
 export default function Products() {
   const [showHistory, setShowHistory] = useState(false);
@@ -68,7 +68,7 @@ export default function Products() {
         </div>
 
         <div className="filter-btn">
-          <IoFilterOutline color="#7E7E7E" size="2vw" />
+          <BiFilterAlt color="#7E7E7E" size="2vw" />
         </div>
       </div>
 
