@@ -1150,19 +1150,19 @@
     background-color: #FFFFFF;
     height: 75vh;
     width: 25vw;
-    margin-top: 5vw;
+    margin-top: 6vw;
     margin-left: 48.5vw;
     position: absolute;
     z-index: 1;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+    box-shadow: 0vw 0vw 1vw rgba(0, 0, 0, 0.2);
+    border-radius: 1vw;
     overflow: hidden;
 }
 
 .notification-container h1 {
     font-weight: 700;
     font-size: 2vw;
-    padding: 0px 0px 0px 20px;
+    padding: 0vw 0vw 0vw 2vw;
 }
 
 .item-container {
@@ -1219,6 +1219,9 @@
     color: #5D5353;
     font-size: 1vw;
     font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .unread-btn {
@@ -1231,6 +1234,9 @@
     font-size: 1vw;
     font-weight: 400;
     margin-left: 0.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .all-btn:hover,
@@ -1249,6 +1255,9 @@
     font-weight: 400;
     margin-left: 2vw;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .notif-btns {
@@ -1265,53 +1274,83 @@
     width: 1vw;
 }
 
+.notif-btns {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width: 800px) {
     .notification-container {
-        height: 85vh;
-        width: 50vw;
-        margin-top: 2vh;
-        margin-left: 23.5vw;
+        background-color: #FFFFFF;
+        height: 65vh;
+        width: 25vw;
+        margin-top: 6vw;
+        position: absolute;
+        z-index: 1;
+        box-shadow: 0vw 0vw 1vw rgba(0, 0, 0, 0.2);
+        border-radius: 1vw;
+        overflow: hidden;
+    }
+
+    .item-txt p {
         font-size: 1.5vw;
     }
 
-    .notification-container h1 {
-        font-size: 2.5vw;
+    .grid-items {
+        margin-left: 0vw;
+        overflow-x: hidden;
     }
 
     .item-container {
-        height: 70vh;
-        margin-top: 1.5vw;
+        display: flex;
+        margin-top: 1vw;
+        flex-direction: column;
+        overflow-y: scroll;
+        height: 60vh;
+        align-items: center;
+    }
+
+    .item-wrap:hover {
+        cursor: pointer;
     }
 
     .image-size {
         height: 10vw;
         width: 10vw;
+        object-fit: cover;
+        align-items: center;
+        border-radius: 1.3vw;
     }
 
     .item-wrap {
-        width: 45vw;
-        margin-left: 12.5vw;
-        margin-bottom: 2vw;
+        flex-direction: row;
+        padding: 1vw;
+        margin-bottom: 1.5vw;
+        display: flex;
+        width: 22.5vw;
+        height: 12vw;
+        border-radius: 1.3vw;
+        align-items: center;
+        position: relative;
     }
 
     .item-txt {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        margin-left: 2.5vw;
     }
 
-    .all-btn,
-    .unread-btn,
-    .mark-all-btn {
-        width: 20vw;
-        height: 5vw;
-        font-size: 2vw;
-        margin-left: 1vw;
-        margin-bottom: 1.5vw;
+    .all-btn:hover,
+    .unread-btn:hover {
+        cursor: pointer;
     }
 
-    .mark-all-btn {
-        margin-left: 2vw;
+    .notif-btns {
+        margin-left: 1.9vw;
+    }
+
+    .close-notif {
+        margin-left: 0vw;
+        margin-left: 7vw;
     }
 }
 
@@ -1352,12 +1391,6 @@
 }
 
 @media (max-width: 950px) and (min-width: 801px) {
-    .notification-container h1 {
-        font-weight: 700;
-        font-size: 2.1vw;
-        padding: 0 0 0 2vw;
-    }
-
     .item-txt p {
         font-size: 1.5vw;
     }
@@ -1446,44 +1479,15 @@
         margin-left: 0vw;
         margin-left: 7vw;
     }
+
+    .grid-items {
+        overflow-x: hidden;
+    }
 }
 
 @media (max-width: 799px) and (min-width: 1px) {
     .item-txt {
         margin-left: 2.5vw;
-    }
-
-    .caught-up-message p {
-        font-size: 2vw;
-        margin-left: 10.5vw;
-    }
-
-    .close-notif {
-        margin-left: 45vw;
-        position: absolute;
-    }
-
-    .legend {
-        height: 1vw;
-        width: 12vw;
-        border-radius: 0.5vw;
-        font-size: 2vw;
-        margin-left: 2.5vw;
-        margin-bottom: 2vw;
-    }
-
-    .blue {
-        height: 1vw;
-        width: 2vw;
-        background-color: #1F82DD;
-        border-radius: 2vw;
-    }
-
-    .red {
-        height: 1vw;
-        width: 2vw;
-        background-color: #DD1F58;
-        border-radius: 2vw;
     }
 }
 
@@ -1682,4 +1686,18 @@
 
 .close-btn:hover {
     cursor: pointer;
+}
+
+.filter-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 25vw;
+    height: 30vw;
+    background: #FFFFFF;
+    box-shadow: 0vw 0vw 1vw rgba(0, 0, 0, 0.1);
+    border-radius: 1vw;
+    margin-right: 1vw;
+    margin-top: 5.5vw;
 }
