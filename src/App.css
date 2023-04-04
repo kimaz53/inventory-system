@@ -426,7 +426,7 @@
 }
 
 .calendar-btns {
-    margin-top: 2.5vw;
+    margin-top: 1.7vw;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -567,7 +567,7 @@
 
 .grid-wrapper {
     flex: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .grid {
@@ -761,7 +761,7 @@
 }
 
 .cards-container {
-    overflow-y: scroll;
+    overflow-y: auto;
     gap: 1.5vw;
     padding: 0vw 3vw 0vw 3vw;
     display: grid;
@@ -823,7 +823,7 @@
 
 @media screen and (max-width: 1040px) {
     .cards-container {
-        overflow-y: scroll;
+        overflow-y: auto;
         gap: 1.5vw;
         padding: 0vw 3vw 0vw 3vw;
         display: grid;
@@ -1169,7 +1169,7 @@
     display: flex;
     margin-top: 1vw;
     flex-direction: column;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 55vh;
     align-items: center;
 }
@@ -1178,7 +1178,7 @@
     display: flex;
     margin-top: 1vw;
     flex-direction: column;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 55vh;
     align-items: center;
 }
@@ -1306,7 +1306,7 @@
         display: flex;
         margin-top: 1vw;
         flex-direction: column;
-        overflow-y: scroll;
+        overflow-y: auto;
         height: 60vh;
         align-items: center;
     }
@@ -1399,7 +1399,7 @@
         display: flex;
         margin-top: 1vw;
         flex-direction: column;
-        overflow-y: scroll;
+        overflow-y: auto;
         height: 60vh;
         align-items: center;
     }
@@ -1673,31 +1673,139 @@
     margin: 5px 10px 10px 0vw;
 }
 
-.close-btn {
-    height: 5vw;
-    width: 5vw;
-    border-radius: 0.5vw;
-    position: absolute;
-    right: 0;
-    margin-right: 9.4vw;
-    margin-top: 2vw;
-    z-index: 1;
-}
-
-.close-btn:hover {
-    cursor: pointer;
-}
-
 .filter-container {
     position: absolute;
     top: 0;
     right: 0;
     z-index: 1;
-    width: 25vw;
-    height: 30vw;
+    width: 20vw;
+    height: 32.5vw;
     background: #FFFFFF;
     box-shadow: 0vw 0vw 1vw rgba(0, 0, 0, 0.1);
     border-radius: 1vw;
     margin-right: 1vw;
     margin-top: 5.5vw;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.selected-filter-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.selected-filter {
+    display: flex;
+    flex-direction: row;
+}
+
+.item-filter {
+    list-style: none;
+    width: 10vw;
+    height: 3.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #FFFFFF;
+    font-size: 1vw;
+}
+
+.item-filter:hover {
+    cursor: pointer;
+}
+
+input[type=checkbox] {
+    height: 1.5vw;
+    width: 1.5vw;
+    accent-color: #47A515;
+}
+
+.checkbox-container {
+    display: flex;
+    margin-left: 1.5vw;
+    padding: 0.5vw;
+    font-size: 1vw;
+    align-items: center;
+}
+
+.item-filter-container {
+    width: 14vw;
+    height: 3.5vw;
+    background-color: #47A515;
+    margin-left: 1vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2vw;
+}
+
+.item-filter-container>div {
+    user-select: none;
+}
+
+.item-filter-container:hover {
+    cursor: pointer;
+}
+
+.close-btn {
+    border: none;
+    color: #FFFFFF;
+    font-size: 1vw;
+}
+
+.more-filter-btn {
+    height: 2vw;
+    width: 7vw;
+    font-size: 1vw;
+    color: #5D5353;
+    text-decoration: underline;
+}
+
+.more-filter-container {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    align-items: center;
+    margin-right: 1vw;
+}
+
+.clear-all-filter-btn {
+    height: 2vw;
+    width: 7vw;
+    font-size: 1vw;
+    color: #DD1F1F;
+    text-decoration: underline;
+}
+
+.selected-items-container {
+    width: 70vw;
+    height: 5vw;
+    display: flex;
+    align-items: center;
+    margin-top: 1vw;
+    justify-content: space-between;
+    margin-bottom: -1vw;
+}
+
+.more-filter-btn:hover,
+.clear-all-filter-btn:hover,
+.checkbox-container:hover,
+.check:hover {
+    cursor: pointer;
+}
+
+.filter-btn>div,
+.more-filter-btn>div .clear-all-filter-btn>div {
+    user-select: none;
+}
+
+.checkbox-items-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 2vw;
+    margin-bottom: 2vw
 }

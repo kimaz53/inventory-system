@@ -2,7 +2,7 @@ import "../App.css";
 import ProductsTable from "./subpages/ProductsTable";
 import History from "./subpages/History";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   IoSearchOutline,
   IoCloudUploadOutline,
@@ -35,13 +35,89 @@ export default function Products() {
 
   const [openFilter, setOpenFilter] = useState(false);
 
+  const [checkedItems, setCheckedItems] = useState({});
+
+  const handleChange = (event) => {
+    const { name, checked = false } = event.target;
+    setCheckedItems({ ...checkedItems, [name]: checked });
+  };
+
+  const clearSelected = () => {
+    setCheckedItems({});
+  };
+
+  const selectedItems = Object.keys(checkedItems).filter(
+    (item) => checkedItems[item]
+  );
+
+  const checkboxes = [
+    { name: "Fresh Produce", key: "checkbox1", id: 1 },
+    { name: "Dairy", key: "checkbox2", id: 2 },
+    { name: "Meat", key: "checkbox3", id: 3 },
+    { name: "Bakery", key: "checkbox4", id: 4 },
+    { name: "Snacks and Packaged Food", key: "checkbox5", id: 5 },
+    { name: "Beverages", key: "checkbox6", id: 6 },
+    { name: "Frozen Food", key: "checkbox7", id: 7 },
+    { name: "Personal Care", key: "checkbox8", id: 8 },
+    { name: "Cleaning Supplies", key: "checkbox9", id: 9 },
+    { name: "Miscellaneous", key: "checkbox10", id: 10 },
+  ];
+
+  const handleClickFilter = () => {
+    setOpenFilter(!openFilter);
+  };
+
+  const buttonRef = useRef(null);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (
+        ref.current &&
+        !ref.current.contains(e.target) &&
+        !buttonRef.current.contains(e.target)
+      ) {
+        setOpenFilter(false);
+      }
+    };
+
+    document.body.addEventListener("mousedown", handler);
+    return () => {
+      document.body.removeEventListener("mousedown", handler);
+    };
+  });
+
   return (
     <div className="product-container">
       {openFilter && (
-        <div className="filter-container">
-          <h1>hello</h1>
+        <div ref={ref} className="filter-container">
+          <div className="checkbox-items-container">
+            {checkboxes.map((item) => (
+              <div key={item.id}>
+                <label className="checkbox-container">
+                  <input
+                    type="checkbox"
+                    name={item.name}
+                    checked={checkedItems[item.name] || false}
+                    onChange={handleChange}
+                    className="check"
+                  />
+                  <span
+                    style={{
+                      color: checkedItems[item.name] ? "#47A515" : "#7E7E7E",
+                      marginLeft: "1vw",
+                      fontSize: "1vw",
+                    }}
+                  >
+                    {item.name}
+                  </span>
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
       )}
+
       <div className="product-nav-wrapper">
         <div
           className={`product-nav-btn ${
@@ -74,10 +150,48 @@ export default function Products() {
           <IoSearchOutline className="search-icon" color="#7E7E7E" size="2vw" />
         </div>
 
-        <div className="filter-btn" onClick={() => setOpenFilter(!openFilter)}>
+        <div
+          ref={buttonRef}
+          className="filter-btn"
+          onClick={() => setOpenFilter(!openFilter)}
+        >
           <BiFilterAlt color="#7E7E7E" size="2vw" />
         </div>
       </div>
+
+      {selectedItems.length > 0 && (
+        <div className="selected-items-container">
+          <div className="selected-filter-container">
+            <div className="selected-filter">
+              {selectedItems.slice(0, 4).map((item) => (
+                <div
+                  key={item}
+                  className="item-filter-container"
+                  onClick={() =>
+                    handleChange({ target: { name: item, checked: false } })
+                  }
+                >
+                  <div className="item-filter">
+                    {item} <div className="close-btn">X</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="more-filter-container">
+            <div className="more-filter-btn">
+              {selectedItems.length > 4 && (
+                <div onClick={handleClickFilter}>
+                  +{selectedItems.length - 4} more
+                </div>
+              )}
+            </div>
+            <div className="clear-all-filter-btn" onClick={clearSelected}>
+              Clear All
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="add-item-wrapper">
         <p>Add a Product</p>
