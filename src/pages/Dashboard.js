@@ -174,19 +174,25 @@ export default function Dashboard() {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const buttonRef = useRef(null);
   const ref = useRef(null);
 
   useEffect(() => {
-    const handleMouseDown = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
+    let handler = (e) => {
+      if (
+        ref.current &&
+        !ref.current.contains(e.target) &&
+        !buttonRef.current.contains(e.target)
+      ) {
         setIsOpen(false);
       }
     };
-    document.body.addEventListener("mousedown", handleMouseDown);
+
+    document.body.addEventListener("mousedown", handler);
     return () => {
-      document.body.removeEventListener("mousedown", handleMouseDown);
+      document.body.removeEventListener("mousedown", handler);
     };
-  }, []);
+  });
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -196,7 +202,6 @@ export default function Dashboard() {
     <div className="stock-container">
       {isOpen && (
         <div>
-          <div className="close-btn" onClick={handleToggle}></div>
           <div className="notification-container" ref={ref}>
             <div
               style={{
@@ -336,6 +341,7 @@ export default function Dashboard() {
           <IoSearchOutline className="search-icon" color="#7E7E7E" size="2vw" />
         </div>
         <div
+          ref={buttonRef}
           style={{ marginRight: "1vw", flexDirection: "column" }}
           className="filter-btn"
           onClick={() => setIsOpen(!isOpen)}
