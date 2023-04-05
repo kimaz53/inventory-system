@@ -334,12 +334,13 @@
     filter: drop-shadow(0px 0.4167vw 0.4167vw rgba(0, 0, 0, 0.25));
     border-radius: 0.4167vw;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
-.item-wrapper-btn p {
+.item-wrapper-btn p, .item-wrapper-btn svg {
     color: #5D5353;
     font-size: 1.5vw;
+    padding: 0.5vw;
 }
 
 .item-wrapper-btn:hover {
@@ -1678,8 +1679,8 @@
     top: 0;
     right: 0;
     z-index: 1;
-    width: 20vw;
-    height: 32.5vw;
+    width: 20.5vw;
+    height: 22.5vw;
     background: #FFFFFF;
     box-shadow: 0vw 0vw 1vw rgba(0, 0, 0, 0.1);
     border-radius: 1vw;
@@ -1728,6 +1729,7 @@ input[type=checkbox] {
     padding: 0.5vw;
     font-size: 1vw;
     align-items: center;
+    height: 2.8vw;
 }
 
 .item-filter-container {
@@ -1808,4 +1810,65 @@ input[type=checkbox] {
     justify-content: center;
     margin-top: 2vw;
     margin-bottom: 2vw
+}
+
+.radio-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 20.5vw;
+    height: 22.5vw;
+    background: #FFFFFF;
+    box-shadow: 0vw 0vw 1vw rgba(0, 0, 0, 0.1);
+    border-radius: 1vw;
+    margin-right: 15vw;
+    margin-top: 13.5vw;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.radio-item-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+
+}
+
+.radio-item-container label {
+    font-size: 1vw;
+    display: flex;
+    align-items: center;
+    height: 0vw;
+}
+
+.radio-items-container {
+    margin-left: 2vw;
+}
+
+
+
+.radio-select {
+    /* Set the size of the radio button */
+    width: 1.5vw;
+    height: 1.5vw;
+}
+
+.radio-select:checked {
+    /* Set the color of the radio button when selected */
+    accent-color: #47A515;
+}
+
+.item-wrapper-btn>div,
+.item-wrapper-btn>p {
+    user-select: none;
+}
+
+.item-wrapper-btn p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
