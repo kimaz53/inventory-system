@@ -337,7 +337,8 @@
     justify-content: space-between;
 }
 
-.item-wrapper-btn p, .item-wrapper-btn svg {
+.item-wrapper-btn p,
+.item-wrapper-btn svg {
     color: #5D5353;
     font-size: 1.5vw;
     padding: 0.5vw;
@@ -1871,4 +1872,8 @@ input[type=checkbox] {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+}   
+
+.radio-item-container span:hover {
+    cursor: pointer;
 }
