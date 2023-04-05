@@ -8,6 +8,8 @@ import {
 import ProductsTable from "./subpages/ProductsTable";
 import { BiFilterAlt } from "react-icons/bi";
 import { CiCalendar } from "react-icons/ci";
+import CheckboxList from "./CheckboxList";
+import SelectedItemsContainer from "./SelectedItemsContainer";
 
 export default function Activities() {
   const [inputValue, setInputValue] = useState("");
@@ -16,10 +18,22 @@ export default function Activities() {
     setInputValue(event.target.value);
   };
 
-  const buttonRef = useRef(null);
-  const ref = useRef(null);
+  const [openFilter, setOpenFilter] = useState(false);
 
-  const [filterOpen, setFilterOpen] = useState(false);
+  const [checkedItems, setCheckedItems] = useState({});
+
+  const handleChange = (event) => {
+    const { name, checked = false } = event.target;
+    setCheckedItems({ ...checkedItems, [name]: checked });
+  };
+
+  const clearSelected = () => {
+    setCheckedItems({});
+  };
+
+  const selectedItems = Object.keys(checkedItems).filter(
+    (item) => checkedItems[item]
+  );
 
   const checkboxes = [
     { name: "Fresh Produce", key: "checkbox1", id: 1 },
@@ -34,12 +48,12 @@ export default function Activities() {
     { name: "Miscellaneous", key: "checkbox10", id: 10 },
   ];
 
-  const [checkedItemss, setCheckedItemss] = useState({});
-
-  const handleChangess = (event) => {
-    const { name, checked = false } = event.target;
-    setCheckedItemss({ ...checkedItemss, [name]: checked });
+  const handleClickFilter = () => {
+    setOpenFilter(!openFilter);
   };
+
+  const buttonRef = useRef(null);
+  const ref = useRef(null);
 
   useEffect(() => {
     let handler = (e) => {
@@ -48,7 +62,7 @@ export default function Activities() {
         !ref.current.contains(e.target) &&
         !buttonRef.current.contains(e.target)
       ) {
-        setFilterOpen(false);
+        setOpenFilter(false);
       }
     };
 
@@ -58,49 +72,15 @@ export default function Activities() {
     };
   });
 
-  const [checkedItems, setCheckedItems] = useState({});
-
-  const handleChange = (event) => {
-    const { name, checked = false } = event.target;
-    setCheckedItems({ ...checkedItems, [name]: checked });
-  };
-
-  const clearSelected = () => {
-    setCheckedItemss({});
-  };
-
-  const selectedItems = Object.keys(checkedItemss).filter(
-    (item) => checkedItemss[item]
-  );
-
   return (
     <div className="product-container">
-      {filterOpen && (
+      {openFilter && (
         <div ref={ref} className="filter-container">
-          <div className="checkbox-items-container">
-            {checkboxes.map((item) => (
-              <div key={item.id}>
-                <label className="checkbox-container">
-                  <input
-                    type="checkbox"
-                    name={item.name}
-                    checked={checkedItemss[item.name] || false}
-                    onChange={handleChangess}
-                    className="check"
-                  />
-                  <span
-                    style={{
-                      color: checkedItemss[item.name] ? "#47A515" : "#7E7E7E",
-                      marginLeft: "1vw",
-                      fontSize: "1vw",
-                    }}
-                  >
-                    {item.name}
-                  </span>
-                </label>
-              </div>
-            ))}
-          </div>
+          <CheckboxList
+            checkboxes={checkboxes}
+            checkedItems={checkedItems}
+            handleChange={handleChange}
+          />
         </div>
       )}
       <div className="product-nav-wrapper">
@@ -127,44 +107,19 @@ export default function Activities() {
         <div
           ref={buttonRef}
           className="filter-btn"
-          onClick={() => setFilterOpen(!filterOpen)}
+          onClick={() => setOpenFilter(!openFilter)}
         >
           <BiFilterAlt color="#7E7E7E" size="2vw" />
         </div>
       </div>
 
       {selectedItems.length > 0 && (
-        <div className="selected-items-container">
-          <div className="selected-filter-container">
-            <div className="selected-filter">
-              {selectedItems.slice(0, 4).map((item) => (
-                <div
-                  key={item}
-                  className="item-filter-container"
-                  onClick={() =>
-                    handleChangess({ target: { name: item, checked: false } })
-                  }
-                >
-                  <div className="item-filter">
-                    {item} <div className="close-btn">X</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="more-filter-container">
-            <div className="more-filter-btn">
-              {selectedItems.length > 4 && (
-                <div onClick={() => setFilterOpen(!filterOpen)}>
-                  +{selectedItems.length - 4} more
-                </div>
-              )}
-            </div>
-            <div className="clear-all-filter-btn" onClick={clearSelected}>
-              Clear All
-            </div>
-          </div>
-        </div>
+        <SelectedItemsContainer
+          selectedItems={selectedItems}
+          handleChange={handleChange}
+          handleClickFilter={handleClickFilter}
+          clearSelected={clearSelected}
+        />
       )}
 
       <div className="calendar-btns">
