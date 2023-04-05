@@ -9,6 +9,9 @@ import {
   IoChevronDownOutline,
 } from "react-icons/io5";
 import { BiFilterAlt } from "react-icons/bi";
+import CheckboxList from "./CheckboxList";
+import SelectedItemsContainer from "./SelectedItemsContainer";
+import RadioList from "./RadioList";
 
 export default function Products() {
   const [showHistory, setShowHistory] = useState(false);
@@ -42,6 +45,12 @@ export default function Products() {
     setCheckedItems({ ...checkedItems, [name]: checked });
   };
 
+  const [selectedRadioItem, setSelectedRadioItem] = useState("");
+
+  const handleRadioChanges = (e) => {
+    setSelectedRadioItem(e.target.value);
+  };
+
   const clearSelected = () => {
     setCheckedItems({});
   };
@@ -67,15 +76,18 @@ export default function Products() {
     setOpenFilter(!openFilter);
   };
 
-  const buttonRef = useRef(null);
-  const ref = useRef(null);
+  const filterBtn = useRef(null);
+  const filterContainer = useRef(null);
+
+  const categoryBtn = useRef(null);
+  const categoryContainer = useRef(null);
 
   useEffect(() => {
     let handler = (e) => {
       if (
-        ref.current &&
-        !ref.current.contains(e.target) &&
-        !buttonRef.current.contains(e.target)
+        filterContainer.current &&
+        !filterContainer.current.contains(e.target) &&
+        !filterBtn.current.contains(e.target)
       ) {
         setOpenFilter(false);
       }
@@ -87,34 +99,44 @@ export default function Products() {
     };
   });
 
+  useEffect(() => {
+    let handler = (e) => {
+      if (
+        categoryContainer.current &&
+        !categoryContainer.current.contains(e.target) &&
+        !categoryBtn.current.contains(e.target)
+      ) {
+        setOpenCategory(false);
+      }
+    };
+
+    document.body.addEventListener("mousedown", handler);
+    return () => {
+      document.body.removeEventListener("mousedown", handler);
+    };
+  });
+
+  const [openCategory, setOpenCategory] = useState(false);
+
   return (
     <div className="product-container">
       {openFilter && (
-        <div ref={ref} className="filter-container">
-          <div className="checkbox-items-container">
-            {checkboxes.map((item) => (
-              <div key={item.id}>
-                <label className="checkbox-container">
-                  <input
-                    type="checkbox"
-                    name={item.name}
-                    checked={checkedItems[item.name] || false}
-                    onChange={handleChange}
-                    className="check"
-                  />
-                  <span
-                    style={{
-                      color: checkedItems[item.name] ? "#47A515" : "#7E7E7E",
-                      marginLeft: "1vw",
-                      fontSize: "1vw",
-                    }}
-                  >
-                    {item.name}
-                  </span>
-                </label>
-              </div>
-            ))}
-          </div>
+        <div ref={filterContainer} className="filter-container">
+          <CheckboxList
+            checkboxes={checkboxes}
+            checkedItems={checkedItems}
+            handleChange={handleChange}
+          />
+        </div>
+      )}
+
+      {openCategory && (
+        <div ref={categoryContainer} className="radio-container">
+          <RadioList
+            checkboxes={checkboxes}
+            selectedRadioItem={selectedRadioItem}
+            handleRadioChanges={handleRadioChanges}
+          />
         </div>
       )}
 
@@ -151,7 +173,7 @@ export default function Products() {
         </div>
 
         <div
-          ref={buttonRef}
+          ref={filterBtn}
           className="filter-btn"
           onClick={() => setOpenFilter(!openFilter)}
         >
@@ -160,37 +182,12 @@ export default function Products() {
       </div>
 
       {selectedItems.length > 0 && (
-        <div className="selected-items-container">
-          <div className="selected-filter-container">
-            <div className="selected-filter">
-              {selectedItems.slice(0, 4).map((item) => (
-                <div
-                  key={item}
-                  className="item-filter-container"
-                  onClick={() =>
-                    handleChange({ target: { name: item, checked: false } })
-                  }
-                >
-                  <div className="item-filter">
-                    {item} <div className="close-btn">X</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="more-filter-container">
-            <div className="more-filter-btn">
-              {selectedItems.length > 4 && (
-                <div onClick={handleClickFilter}>
-                  +{selectedItems.length - 4} more
-                </div>
-              )}
-            </div>
-            <div className="clear-all-filter-btn" onClick={clearSelected}>
-              Clear All
-            </div>
-          </div>
-        </div>
+        <SelectedItemsContainer
+          selectedItems={selectedItems}
+          handleChange={handleChange}
+          handleClickFilter={handleClickFilter}
+          clearSelected={clearSelected}
+        />
       )}
 
       <div className="add-item-wrapper">
@@ -219,12 +216,17 @@ export default function Products() {
 
         <div className="item-wrapper-btn">
           <p>Image</p>
-          <IoCloudUploadOutline color="#5D5353" size="2vw" />
+          <IoCloudUploadOutline color="#5D5353" size="2.5vw" />
         </div>
 
-        <div className="item-wrapper-btn">
-          <p>Category</p>
-          <IoChevronDownOutline color="#5D5353" size="2vw" />
+        <div
+          ref={categoryBtn}
+          className="item-wrapper-btn"
+          onClick={() => setOpenCategory(!openCategory)}
+        >
+          <p>{selectedRadioItem || "Category"}</p>
+
+          <IoChevronDownOutline color="#5D5353" size="2.5vw" />
         </div>
 
         <div className="item-qty-wrapper">
