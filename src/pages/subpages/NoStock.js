@@ -15,7 +15,7 @@ const data = [
     id: 1,
     image:
       "https://media.istockphoto.com/id/1215792210/photo/homemade-purple-japanese-ube-ice-cream.jpg?s=612x612&w=0&k=20&c=mKmF0NSxC7mIVIhY3VHGa4nY9xsXuXXtP6P5xaxJ7Rk=",
-    stocks: 0,
+    stocks: 73,
     unread: true,
   },
   {
@@ -23,7 +23,7 @@ const data = [
     id: 2,
     image:
       "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    stocks: 0,
+    stocks: 62,
     unread: false,
   },
   {
@@ -31,7 +31,7 @@ const data = [
     id: 3,
     image:
       "https://images.unsplash.com/photo-1582284540020-8acbe03f4924?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
-    stocks: 0,
+    stocks: 70,
     unread: false,
   },
   {
@@ -55,7 +55,7 @@ const data = [
     id: 6,
     image:
       "https://plus.unsplash.com/premium_photo-1676037839664-6f52faa56a81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
-    stocks: 0,
+    stocks: 51,
     unread: true,
   },
   {
@@ -63,7 +63,7 @@ const data = [
     id: 7,
     image:
       "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    stocks: 0,
+    stocks: 60,
     unread: true,
   },
   // more data items...
@@ -210,59 +210,61 @@ export default function NoStock() {
       ) : (
         <div className="grid-wrapper">
           <div className="grid">
-            {data.map((item, index) => (
-              <div
-                key={index}
-                className="grid-item"
-                style={{
-                  backgroundColor: dominantColors[index],
-                }}
-                onClick={() => setSelectedItem(item.id)}
-              >
-                <div className="image-container">
-                  <img src={item.image} alt={item.title} className="image" />
-                </div>
-                <div className="bottom-container">
-                  <div className="items-container">
-                    <div>
-                      <h2>{item.title}</h2>
+            {data.map((item, index) =>
+              item.stocks === 0 ? (
+                <div
+                  key={index}
+                  className="grid-item"
+                  style={{
+                    backgroundColor: dominantColors[index],
+                  }}
+                  onClick={() => setSelectedItem(item.id)}
+                >
+                  <div className="image-container">
+                    <img src={item.image} alt={item.title} className="image" />
+                  </div>
+                  <div className="bottom-container">
+                    <div className="items-container">
+                      <div>
+                        <h2>{item.title}</h2>
+                      </div>
+                      <div>
+                        <p
+                          style={{
+                            color: "#DD1F1F",
+                          }}
+                        >
+                          {item.stocks} Stocks Left
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p
-                        style={{
-                          color: "#DD1F1F",
-                        }}
+                    <div className="operation-container">
+                      <div
+                        onClick={() => handleQtyChange(-1)}
+                        className="minus-btns"
                       >
-                        {item.stocks} Stocks Left
-                      </p>
-                    </div>
-                  </div>
-                  <div className="operation-container">
-                    <div
-                      onClick={() => handleQtyChange(-1)}
-                      className="minus-btns"
-                    >
-                      <IoRemoveOutline color="#FFFFFF" size="30px" />
-                    </div>
-                    <div className="value-container">
-                      <input
-                        type="number"
-                        className="qty-field"
-                        value={qty}
-                        onChange={(e) => setQty(parseInt(e.target.value))}
-                      />
-                      <div className="underline"></div>
-                    </div>
-                    <div
-                      onClick={() => handleQtyChange(1)}
-                      className="plus-btns"
-                    >
-                      <IoAddOutline color="#FFFFFF" size="30px" />
+                        <IoRemoveOutline color="#FFFFFF" size="30px" />
+                      </div>
+                      <div className="value-container">
+                        <input
+                          type="number"
+                          className="qty-field"
+                          value={qty}
+                          onChange={(e) => setQty(parseInt(e.target.value))}
+                        />
+                        <div className="underline"></div>
+                      </div>
+                      <div
+                        onClick={() => handleQtyChange(1)}
+                        className="plus-btns"
+                      >
+                        <IoAddOutline color="#FFFFFF" size="30px" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ) : null
+            )}
           </div>
         </div>
       )}

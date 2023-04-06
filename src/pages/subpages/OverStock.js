@@ -8,7 +8,6 @@ import {
 import ColorThief from "colorthief";
 import { useState, useEffect, useRef } from "react";
 import noData from "../../../src/noData.png";
-import { useDispatch } from "react-redux";
 
 const data = [
   {
@@ -16,7 +15,7 @@ const data = [
     id: 1,
     image:
       "https://media.istockphoto.com/id/1215792210/photo/homemade-purple-japanese-ube-ice-cream.jpg?s=612x612&w=0&k=20&c=mKmF0NSxC7mIVIhY3VHGa4nY9xsXuXXtP6P5xaxJ7Rk=",
-    stocks: 64,
+    stocks: 73,
     unread: true,
   },
   {
@@ -24,7 +23,7 @@ const data = [
     id: 2,
     image:
       "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-    stocks: 74,
+    stocks: 62,
     unread: false,
   },
   {
@@ -32,7 +31,7 @@ const data = [
     id: 3,
     image:
       "https://images.unsplash.com/photo-1582284540020-8acbe03f4924?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
-    stocks: 52,
+    stocks: 70,
     unread: false,
   },
   {
@@ -40,7 +39,7 @@ const data = [
     id: 4,
     image:
       "https://images.unsplash.com/photo-1499195333224-3ce974eecb47?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1051&q=80",
-    stocks: 51,
+    stocks: 0,
     unread: false,
   },
   {
@@ -48,7 +47,7 @@ const data = [
     id: 5,
     image:
       "https://images.unsplash.com/photo-1553456558-aff63285bdd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    stocks: 61,
+    stocks: 0,
     unread: true,
   },
   {
@@ -56,7 +55,7 @@ const data = [
     id: 6,
     image:
       "https://plus.unsplash.com/premium_photo-1676037839664-6f52faa56a81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
-    stocks: 67,
+    stocks: 51,
     unread: true,
   },
   {
@@ -64,7 +63,7 @@ const data = [
     id: 7,
     image:
       "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    stocks: 86,
+    stocks: 60,
     unread: true,
   },
   // more data items...
@@ -105,9 +104,6 @@ export default function OverStock() {
   const [selectedItem, setSelectedItem] = useState(
     location.state?.selectedItemId
   );
-
-  const dispatch = useDispatch();
-  dispatch({ type: "SET_SELECTED_ITEM_ID", payload: selectedItem });
 
   const handleQtyChanges = (itemId, value) => {
     setQty(qty + value);
@@ -214,59 +210,61 @@ export default function OverStock() {
       ) : (
         <div className="grid-wrapper">
           <div className="grid">
-            {data.map((item, index) => (
-              <div
-                key={index}
-                className="grid-item"
-                style={{
-                  backgroundColor: dominantColors[index],
-                }}
-                onClick={() => setSelectedItem(item.id)}
-              >
-                <div className="image-container">
-                  <img src={item.image} alt={item.title} className="image" />
-                </div>
-                <div className="bottom-container">
-                  <div className="items-container">
-                    <div>
-                      <h2>{item.title}</h2>
+            {data.map((item, index) =>
+              item.stocks > 0 ? (
+                <div
+                  key={index}
+                  className="grid-item"
+                  style={{
+                    backgroundColor: dominantColors[index],
+                  }}
+                  onClick={() => setSelectedItem(item.id)}
+                >
+                  <div className="image-container">
+                    <img src={item.image} alt={item.title} className="image" />
+                  </div>
+                  <div className="bottom-container">
+                    <div className="items-container">
+                      <div>
+                        <h2>{item.title}</h2>
+                      </div>
+                      <div>
+                        <p
+                          style={{
+                            color: "#1F82DD",
+                          }}
+                        >
+                          {item.stocks} Stocks Left
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p
-                        style={{
-                          color: "#1F82DD",
-                        }}
+                    <div className="operation-container">
+                      <div
+                        onClick={() => handleQtyChange(-1)}
+                        className="minus-btns"
                       >
-                        {item.stocks} Stocks Left
-                      </p>
-                    </div>
-                  </div>
-                  <div className="operation-container">
-                    <div
-                      onClick={() => handleQtyChange(-1)}
-                      className="minus-btns"
-                    >
-                      <IoRemoveOutline color="#FFFFFF" size="30px" />
-                    </div>
-                    <div className="value-container">
-                      <input
-                        type="number"
-                        className="qty-field"
-                        value={qty}
-                        onChange={(e) => setQty(parseInt(e.target.value))}
-                      />
-                      <div className="underline"></div>
-                    </div>
-                    <div
-                      onClick={() => handleQtyChange(1)}
-                      className="plus-btns"
-                    >
-                      <IoAddOutline color="#FFFFFF" size="30px" />
+                        <IoRemoveOutline color="#FFFFFF" size="30px" />
+                      </div>
+                      <div className="value-container">
+                        <input
+                          type="number"
+                          className="qty-field"
+                          value={qty}
+                          onChange={(e) => setQty(parseInt(e.target.value))}
+                        />
+                        <div className="underline"></div>
+                      </div>
+                      <div
+                        onClick={() => handleQtyChange(1)}
+                        className="plus-btns"
+                      >
+                        <IoAddOutline color="#FFFFFF" size="30px" />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ) : null
+            )}
           </div>
         </div>
       )}
