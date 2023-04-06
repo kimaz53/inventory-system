@@ -1877,3 +1877,8 @@ input[type=checkbox] {
 .radio-item-container span:hover {
     cursor: pointer;
 }
+
+.login-wrapper{
+    position: absolute;
+    flex-direction: column;
+}
