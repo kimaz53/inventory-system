@@ -17,6 +17,11 @@ import { useDispatch } from "react-redux";
 export default function Dashboard() {
   const navigate = useNavigate();
 
+  function handleLogout() {
+    dispatch({ type: "LOGOUT" });
+    navigate("/login");
+  }
+
   const [data, setData] = useState([
     {
       title: "Item 1",
@@ -223,7 +228,9 @@ export default function Dashboard() {
               <button
                 onClick={handleAllClick}
                 className="all-btn"
-                style={{ backgroundColor: !unreadOnly ? "#47A515" : "#F2F2F2" }}
+                style={{
+                  backgroundColor: !unreadOnly ? "#47A515" : "#F2F2F2",
+                }}
                 selectedid={selectedItemId}
               >
                 All
@@ -231,7 +238,9 @@ export default function Dashboard() {
               <button
                 onClick={handleUnreadClick}
                 className="unread-btn"
-                style={{ backgroundColor: unreadOnly ? "#47A515" : "#F2F2F2" }}
+                style={{
+                  backgroundColor: unreadOnly ? "#47A515" : "#F2F2F2",
+                }}
               >
                 {unreadItems > 0 ? `Unread (${unreadItems})` : "Unread"}
               </button>
@@ -309,7 +318,9 @@ export default function Dashboard() {
                   <div className="item-txt">
                     <p style={{ color: "#5D5353" }}>{item.title}</p>
                     <p
-                      style={{ color: item.stocks > 0 ? "#1F99DD" : "#DD1F58" }}
+                      style={{
+                        color: item.stocks > 0 ? "#1F99DD" : "#DD1F58",
+                      }}
                     >
                       {item.stocks} stocks available
                     </p>
@@ -350,7 +361,7 @@ export default function Dashboard() {
           <IoNotificationsOutline color="#7E7E7E" size="2vw" />
         </div>
 
-        <div className="filter-btn">
+        <div className="filter-btn" onClick={handleLogout}>
           <IoPersonCircleOutline color="#7E7E7E" size="2vw" />
         </div>
       </div>
