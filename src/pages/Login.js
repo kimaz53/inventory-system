@@ -1,10 +1,15 @@
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch({ type: "LOGOUT" });
+  }, [dispatch]);
 
   function handleLogin() {
     const username = document.getElementsByName("uname")[0].value;
