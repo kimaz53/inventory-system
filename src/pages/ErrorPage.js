@@ -11,7 +11,7 @@ export default function Error_Page() {
       if (secondsLeft > 0) {
         setSecondsLeft(secondsLeft - 1);
       } else {
-        navigate(-1)
+        navigate(-1);
       }
     }, 1000);
 
