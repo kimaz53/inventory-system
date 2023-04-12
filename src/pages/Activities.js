@@ -10,6 +10,9 @@ import { BiFilterAlt } from "react-icons/bi";
 import { CiCalendar } from "react-icons/ci";
 import CheckboxList from "./CheckboxList";
 import SelectedItemsContainer from "./SelectedItemsContainer";
+import { DateRangePicker } from "react-date-range";
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
 
 export default function Activities() {
   const [inputValue, setInputValue] = useState("");
@@ -72,8 +75,69 @@ export default function Activities() {
     };
   });
 
+  const calendarButtonRef = useRef(null);
+  const calendarRef = useRef(null);
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (
+        calendarRef.current &&
+        !calendarRef.current.contains(e.target) &&
+        !calendarButtonRef.current.contains(e.target)
+      ) {
+        setOpenCalendar(false);
+      }
+    };
+
+    document.body.addEventListener("mousedown", handler);
+    return () => {
+      document.body.removeEventListener("mousedown", handler);
+    };
+  });
+
+  const [openCalendar, setOpenCalendar] = useState(false);
+
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
+
+  const handleDateChange = (ranges) => {
+    setDateRange([ranges.selection]);
+  };
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.toLocaleDateString("en-US", {
+    month: "long",
+  });
+  const currentYear = currentDate.getFullYear();
+
+  const defaultDateRange = `${currentMonth} 1-${new Date(
+    currentYear,
+    currentDate.getMonth() + 1,
+    0
+  ).getDate()}, ${currentYear}`;
+
+
+
   return (
     <div className="product-container">
+      {openCalendar && (
+        <div ref={calendarRef} className="date-picker">
+          <DateRangePicker
+            className="calendar"
+            ranges={dateRange}
+            onChange={handleDateChange}
+            showSelectionPreview={true}
+            moveRangeOnFirstSelection={false}
+            rangeColors={["#47A515", "#47A515", "#47A515"]}
+          />
+        </div>
+      )}
+
       {openFilter && (
         <div ref={ref} className="filter-container">
           <CheckboxList
@@ -100,7 +164,13 @@ export default function Activities() {
           />
           <IoSearchOutline className="search-icon" color="#7E7E7E" size="2vw" />
         </div>
-        <div style={{ marginRight: "1vw" }} className="filter-btn">
+
+        <div
+          ref={calendarButtonRef}
+          style={{ marginRight: "1vw" }}
+          className="filter-btn"
+          onClick={() => setOpenCalendar(!openCalendar)}
+        >
           <CiCalendar color="#7E7E7E" size="2vw" strokeWidth={0.5} />
         </div>
 
@@ -136,7 +206,22 @@ export default function Activities() {
         </div>
 
         <div className="date-wrapper">
-          <h1>April 1-30, 2023</h1>
+          {dateRange ? (
+            <h1>
+              {`${dateRange[0].startDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+              })}-${
+                dateRange[0].endDate
+                  ? dateRange[0].endDate.toLocaleDateString("en-US", {
+                      day: "numeric",
+                    })
+                  : ""
+              }, ${dateRange[0].endDate.getFullYear()}`}
+            </h1>
+          ) : (
+            <h1>{defaultDateRange}</h1>
+          )}
         </div>
 
         <div className="month-week-day">

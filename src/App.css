@@ -19,6 +19,7 @@
     position: absolute;
     display: flex;
     justify-content: space-between;
+    overflow: hidden;
 }
 
 .nav-wrapper {
@@ -367,6 +368,9 @@
 }
 
 .login-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
     flex-direction: column;
     height: 100vh;
     background-color: #FFFFFF;
@@ -1684,7 +1688,7 @@
     box-shadow: 0vw 0vw 1vw rgba(0, 0, 0, 0.1);
     border-radius: 1vw;
     margin-right: 1vw;
-    margin-top: 5.5vw;
+    margin-top: 6vw;
     overflow: hidden;
     overflow-y: auto;
 }
@@ -1870,8 +1874,66 @@ input[type=checkbox] {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-}   
+}
 
 .radio-item-container span:hover {
     cursor: pointer;
+}
+
+.date-picker {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 600px;
+    height: 450px;
+    background: #FFFFFF;
+    box-shadow: 0vw 0vw 1vw rgba(0, 0, 0, 0.1);
+    border-radius: 1vw;
+    margin-right: 1vw;
+    margin-top: 6vw;
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: auto;
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar {
+    margin-top: 2vw;
+    margin-bottom: 1vw;
+    background-color: #1F82DD;
+}
+
+@media screen and (max-width: 840px) {
+    .date-picker {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+        width: 350px;
+        height: 450px;
+        background: #FFFFFF;
+        box-shadow: 0vw 0vw 1vw rgba(0, 0, 0, 0.1);
+        border-radius: 1vw;
+        margin-right: 1vw;
+        margin-top: 6vw;
+        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .calendar {
+        margin-top: 2vw;
+        margin-bottom: 1vw;
+    }
+
+    .rdrDefinedRangesWrapper {
+        display: none;
+    }
 }
