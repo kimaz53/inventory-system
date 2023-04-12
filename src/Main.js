@@ -36,7 +36,6 @@ function Main() {
   }, []);
 
   const isLoggedIn = useSelector((state) => state.isLogin);
-  console.log(isLoggedIn);
 
   return (
     <>
