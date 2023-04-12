@@ -17,8 +17,6 @@ import { useSelector } from "react-redux";
 import CustomLink from "./pages/CustomLink";
 
 function Main() {
-  const { username, password } = useSelector((state) => state);
-
   const [contentWrapperHeight, setContentWrapperHeight] = useState(0);
 
   useEffect(() => {
@@ -37,9 +35,12 @@ function Main() {
     };
   }, []);
 
+  const isLoggedIn = useSelector((state) => state.isLogin);
+  console.log(isLoggedIn);
+
   return (
     <>
-      {username === "admin" && password === "admin" ? (
+      {isLoggedIn === true ? (
         <div className="canvas">
           <div
             className="content-wrapper"
@@ -153,9 +154,9 @@ function Main() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/activities" element={<Activities />} />
-                <Route path="/login" element={<Login />} />
                 <Route path="/error" element={<ErrorPage />} />
                 <Route path="/" element={<Navigate to="/login" replace />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="*" element={<Navigate to="/error" replace />} />
                 <Route path="/products/nostock" element={<NoStock />} />
                 <Route path="/products/overstock" element={<OverStock />} />
