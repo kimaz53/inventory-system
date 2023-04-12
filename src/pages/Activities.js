@@ -109,19 +109,10 @@ export default function Activities() {
     setDateRange([ranges.selection]);
   };
 
-  const currentDate = new Date();
-  const currentMonth = currentDate.toLocaleDateString("en-US", {
-    month: "long",
-  });
-  const currentYear = currentDate.getFullYear();
-
-  const defaultDateRange = `${currentMonth} 1-${new Date(
-    currentYear,
-    currentDate.getMonth() + 1,
-    0
-  ).getDate()}, ${currentYear}`;
-
-
+  function handleTodayButtonClick() {
+    const today = new Date();
+    setDateRange([{ startDate: today, endDate: today, key: "selection" }]);
+  }
 
   return (
     <div className="product-container">
@@ -200,7 +191,11 @@ export default function Activities() {
           <div className="next-btn">
             <IoChevronForwardOutline color="#FFFFFF" size="2vw" />
           </div>
-          <div style={{ marginLeft: "1vw" }} className="today-btn">
+          <div
+            style={{ marginLeft: "1vw" }}
+            className="today-btn"
+            onClick={handleTodayButtonClick}
+          >
             <p>Today</p>
           </div>
         </div>
@@ -220,7 +215,7 @@ export default function Activities() {
               }, ${dateRange[0].endDate.getFullYear()}`}
             </h1>
           ) : (
-            <h1>{defaultDateRange}</h1>
+            <h1>{dateRange}</h1>
           )}
         </div>
 
