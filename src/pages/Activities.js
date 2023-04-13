@@ -11,8 +11,8 @@ import { CiCalendar } from "react-icons/ci";
 import CheckboxList from "./CheckboxList";
 import SelectedItemsContainer from "./SelectedItemsContainer";
 import { DateRangePicker } from "react-date-range";
-import "react-date-range/dist/styles.css"; // main style file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 export default function Activities() {
   const [inputValue, setInputValue] = useState("");
@@ -109,10 +109,114 @@ export default function Activities() {
     setDateRange([ranges.selection]);
   };
 
-  function handleTodayButtonClick() {
+  function getTodayDateRange() {
+    setSelectedButton("today")
     const today = new Date();
-    setDateRange([{ startDate: today, endDate: today, key: "selection" }]);
+    return [
+      {
+        startDate: today,
+        endDate: today,
+        key: "selection",
+      },
+    ];
   }
+
+  function handlePrevNextClick(offset) {
+    const { startDate, endDate } = dateRange[0];
+    let newStartDate, newEndDate;
+
+    switch (dateRange[0].type) {
+      case "month":
+        newStartDate = new Date(
+          startDate.getFullYear(),
+          startDate.getMonth() + offset,
+          1
+        );
+        newEndDate = new Date(
+          newStartDate.getFullYear(),
+          newStartDate.getMonth() + 1,
+          0
+        );
+        break;
+      case "week":
+        newStartDate = new Date(
+          startDate.getFullYear(),
+          startDate.getMonth(),
+          startDate.getDate() + offset * 7
+        );
+        newEndDate = new Date(
+          endDate.getFullYear(),
+          endDate.getMonth(),
+          endDate.getDate() + offset * 7
+        );
+        break;
+      case "day":
+      default:
+        newStartDate = new Date(
+          startDate.getFullYear(),
+          startDate.getMonth(),
+          startDate.getDate() + offset
+        );
+        newEndDate = new Date(
+          endDate.getFullYear(),
+          endDate.getMonth(),
+          endDate.getDate() + offset
+        );
+        break;
+    }
+
+    setDateRange([
+      {
+        startDate: newStartDate,
+        endDate: newEndDate,
+        type: dateRange[0].type,
+        key: "selection",
+      },
+    ]);
+  }
+
+  function handleDateRangeClick(rangeType) {
+    setSelectedButton(rangeType);
+    const today = new Date();
+    let startDate, endDate;
+
+    switch (rangeType) {
+      case "month":
+        startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        break;
+      case "week":
+        const weekStart = today.getDate() - today.getDay();
+        const weekEnd = weekStart + 6;
+        startDate = new Date(today.getFullYear(), today.getMonth(), weekStart);
+        endDate = new Date(today.getFullYear(), today.getMonth(), weekEnd);
+        break;
+      case "day":
+      default:
+        startDate = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate()
+        );
+        endDate = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate()
+        );
+        break;
+    }
+
+    setDateRange([
+      {
+        startDate,
+        endDate,
+        type: rangeType,
+        key: "selection",
+      },
+    ]);
+  }
+
+  const [selectedButton, setSelectedButton] = useState("today");
 
   return (
     <div className="product-container">
@@ -185,44 +289,53 @@ export default function Activities() {
 
       <div className="calendar-btns">
         <div className="prev-next-btn">
-          <div className="prev-btn">
+          <div className="prev-btn" onClick={() => handlePrevNextClick(-1)}>
             <IoChevronBackOutline color="#FFFFFF" size="2vw" />
           </div>
-          <div className="next-btn">
+          <div className="next-btn" onClick={() => handlePrevNextClick(1)}>
             <IoChevronForwardOutline color="#FFFFFF" size="2vw" />
           </div>
           <div
             style={{ marginLeft: "1vw" }}
-            className="today-btn"
-            onClick={handleTodayButtonClick}
+            className={`today-btn ${
+              selectedButton === "today" ? "selected" : ""
+            }`}
+            onClick={() => setDateRange(getTodayDateRange())}
           >
             <p>Today</p>
           </div>
         </div>
 
         <div className="date-wrapper">
-          {dateRange ? (
-            <h1>
-              {`${dateRange[0].startDate.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              })}-${
-                dateRange[0].endDate
-                  ? dateRange[0].endDate.toLocaleDateString("en-US", {
-                      day: "numeric",
-                    })
-                  : ""
-              }, ${dateRange[0].endDate.getFullYear()}`}
-            </h1>
-          ) : (
-            <h1>{dateRange}</h1>
-          )}
+          <h1>
+            {dateRange[0]?.startDate?.toLocaleDateString()} -{" "}
+            {dateRange[0]?.endDate?.toLocaleDateString()}
+          </h1>
         </div>
 
         <div className="month-week-day">
-          <div className="month-btn">Month</div>
-          <div className="week-btn">Week</div>
-          <div className="day-btn">Day</div>
+          <div
+            className={`month-btn ${
+              selectedButton === "month" ? "selected" : ""
+            }`}
+            onClick={() => handleDateRangeClick("month")}
+          >
+            Month
+          </div>
+          <div
+            className={`week-btn ${
+              selectedButton === "week" ? "selected" : ""
+            }`}
+            onClick={() => handleDateRangeClick("week")}
+          >
+            Week
+          </div>
+          <div
+            className={`day-btn ${selectedButton === "day" ? "selected" : ""}`}
+            onClick={() => handleDateRangeClick("day")}
+          >
+            Day
+          </div>
         </div>
       </div>
 

@@ -481,7 +481,7 @@
 .month-btn {
     width: 5vw;
     height: 3.5vw;
-    background-color: #7E7E7E;
+    background-color: #A1A1A1;
     border-radius: 0.5vw 0vw 0vw 0.5vw;
     display: flex;
     align-items: center;
@@ -1936,4 +1936,12 @@ input[type=checkbox] {
     .rdrDefinedRangesWrapper {
         display: none;
     }
+}
+
+.calendar-btns>div {
+    user-select: none;
+}
+
+.selected {
+    background-color: #7E7E7E;
 }
