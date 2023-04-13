@@ -162,6 +162,7 @@ export default function Activities() {
           endDate.getMonth(),
           endDate.getDate() + offset
         );
+        setSelectedButton("day")
         break;
     }
 
