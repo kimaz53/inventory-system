@@ -14,6 +14,9 @@ function formatDate(dateStr) {
 const ReadOnlyRow = ({ item, handleEdit, handleDelete }) => {
   return (
     <tr>
+      <td className="item-img-container">
+        <img className="item-img" src={item.product_image} alt="" />
+      </td>
       <td>{formatDate(item.date_updated)}</td>
       <td>{item.item_code}</td>
       <td>{item.item}</td>
