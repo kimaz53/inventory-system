@@ -1,4 +1,7 @@
 import React from "react";
+import { BiEditAlt } from "react-icons/bi";
+import { AiOutlineDelete } from "react-icons/ai";
+import "../App.css";
 
 function formatDate(dateStr) {
   const date = new Date(dateStr);
@@ -11,22 +14,23 @@ function formatDate(dateStr) {
 const ReadOnlyRow = ({ item, handleEdit, handleDelete }) => {
   return (
     <tr>
-      <td>
-        <input type="checkbox" id={`checkbox-${item.item_code}`} />
-      </td>
       <td>{formatDate(item.date_updated)}</td>
       <td>{item.item_code}</td>
       <td>{item.item}</td>
       <td>{item.category}</td>
       <td>{item.yesterday_stocks}</td>
       <td>{item.remaining_stocks}</td>
-      <td>
-        <button type="button" onClick={(e) => handleEdit(e, item)}>
-          Edit
-        </button>
-        <button type="button" onClick={() => handleDelete(item.product_id)}>
-          Delete
-        </button>
+      <td className="action-btns">
+        <BiEditAlt
+          onClick={(e) => handleEdit(e, item)}
+          color="#47A515"
+          size="1.5vw"
+        />
+        <AiOutlineDelete
+          onClick={() => handleDelete(item.product_id)}
+          color="#DD1F58"
+          size="1.5vw"
+        />
       </td>
     </tr>
   );

@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import { IoCheckmarkOutline, IoCloseOutline } from "react-icons/io5";
+import "../App.css";
 
 function formatDate(dateStr) {
   const date = new Date(dateStr);
@@ -20,20 +22,15 @@ const EditableRow = ({ item, handleInputChange, handleCancelClick }) => {
     }
   };
 
-  console.log(item);
-
   return (
     <tr>
-      <td>
-        <input type="checkbox" id={`checkbox-${item.item_code}`} />
-      </td>
       <td>{formatDate(item.date_updated)}</td>
       <td>
         <input
           className="edit-row"
           type="number"
           required="required"
-          placeholder="Enter a code..."
+          placeholder="Code..."
           name="item_code"
           value={item.item_code}
           onChange={handleInputChange}
@@ -44,7 +41,7 @@ const EditableRow = ({ item, handleInputChange, handleCancelClick }) => {
           className="edit-row"
           type="text"
           required="required"
-          placeholder="Enter a name..."
+          placeholder="Title..."
           name="item"
           value={item.item}
           onChange={handleInputChange}
@@ -55,7 +52,7 @@ const EditableRow = ({ item, handleInputChange, handleCancelClick }) => {
           className="edit-row"
           type="text"
           required="required"
-          placeholder="Enter a category..."
+          placeholder="Category..."
           name="category"
           value={item.category}
           onChange={handleInputChange}
@@ -67,19 +64,19 @@ const EditableRow = ({ item, handleInputChange, handleCancelClick }) => {
           className="edit-row"
           type="number"
           required="required"
-          placeholder="Enter remaining stocks..."
+          placeholder="Qty..."
           name="remaining_stocks"
           value={item.remaining_stocks}
           onChange={handleInputChange}
         />
       </td>
-      <td>
-        <button type="submit" onClick={handleSave}>
-          Save
-        </button>
-        <button type="button" onClick={handleCancelClick}>
-          Cancel
-        </button>
+      <td className="action-btns">
+        <IoCheckmarkOutline onClick={handleSave} color="#47A515" size="1.5vw" />
+        <IoCloseOutline
+          onClick={handleCancelClick}
+          color="#DD1F58"
+          size="1.5vw"
+        />
       </td>
     </tr>
   );
