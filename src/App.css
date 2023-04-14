@@ -2073,3 +2073,7 @@ table {
     background-color: transparent;
     color: #5D5353;
 }
+
+.action-btns svg {
+    padding: 0.2vw;
+}

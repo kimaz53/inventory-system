@@ -56,9 +56,6 @@ export default function ProductsTable() {
         <table className="table">
           <thead>
             <tr className="tr-tbl">
-              <td>
-                <input type="checkbox" id="checkbox" />
-              </td>
               <th>Date Updated</th>
               <th>Item Code</th>
               <th>Item</th>
