@@ -19,7 +19,7 @@ function SelectedItemsContainer({
               }
             >
               <div className="item-filter">
-                {item} <div className="close-btn">X</div>
+                <p>{item}</p> <div className="close-btn">x</div>
               </div>
             </div>
           ))}

@@ -494,6 +494,7 @@
 .date-wrapper h1 {
     font-size: 2vw;
     color: #7E7E7E;
+    margin: 0.5vw 0vw 0.5vw 0vw;
 }
 
 .month-btn {
@@ -1699,7 +1700,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 1;
+    z-index: 2;
     width: 20.5vw;
     height: 22.5vw;
     background: #FFFFFF;
@@ -1734,6 +1735,13 @@
     font-size: 1vw;
 }
 
+.item-filter p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+}
+
 .item-filter:hover {
     cursor: pointer;
 }
@@ -1754,8 +1762,8 @@ input[type=checkbox] {
 }
 
 .item-filter-container {
-    width: 14vw;
-    height: 3.5vw;
+    width: 12vw;
+    height: 2vw;
     background-color: #47A515;
     margin-left: 1vw;
     display: flex;
@@ -1785,11 +1793,14 @@ input[type=checkbox] {
     font-size: 1vw;
     color: #5D5353;
     text-decoration: underline;
+    display: flex;
+    align-items: center;
+    justify-content: right;
 }
 
 .more-filter-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     text-align: right;
     align-items: center;
     margin-right: 1vw;
@@ -1801,16 +1812,19 @@ input[type=checkbox] {
     font-size: 1vw;
     color: #DD1F1F;
     text-decoration: underline;
+    display: flex;
+    align-items: center;
+    justify-content: right;
 }
 
 .selected-items-container {
     width: 70vw;
-    height: 5vw;
+    height: 4vw;
     display: flex;
     align-items: center;
-    margin-top: 1vw;
     justify-content: space-between;
-    margin-bottom: -1vw;
+    margin-bottom: -2vw;
+    z-index: 1;
 }
 
 .more-filter-btn:hover,
@@ -1902,7 +1916,7 @@ input[type=checkbox] {
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 1;
+    z-index: 2;
     width: 600px;
     height: 450px;
     background: #FFFFFF;
@@ -2051,7 +2065,7 @@ table {
     width: 2vw;
     border-radius: 0.4vw;
     margin-left: 1vw;
-    background-color: #F2F2F2;
+    background-color: #FFFFFF;
 }
 
 .img-link-btns svg {
@@ -2063,7 +2077,8 @@ table {
     border-radius: 0.4vw;
 }
 
-.edit-row {
+.edit-row,
+.edit-category {
     width: 7vw;
     height: 1.5vw;
     font-size: 1vw;
@@ -2074,6 +2089,24 @@ table {
     color: #5D5353;
 }
 
+.edit-category:hover {
+    cursor: pointer;
+}
+
 .action-btns svg {
     padding: 0.2vw;
+}
+
+.action-btns svg:hover {
+    cursor: pointer;
+}
+
+.item-img {
+    height: 4vw;
+    width: 100%;
+    object-fit: cover;
+}
+
+.item-img-container {
+    padding: 0;
 }

@@ -110,7 +110,7 @@ export default function Activities() {
   };
 
   function getTodayDateRange() {
-    setSelectedButton("today")
+    setSelectedButton("today");
     const today = new Date();
     return [
       {
@@ -162,7 +162,7 @@ export default function Activities() {
           endDate.getMonth(),
           endDate.getDate() + offset
         );
-        setSelectedButton("day")
+        setSelectedButton("day");
         break;
     }
 
@@ -279,15 +279,6 @@ export default function Activities() {
         </div>
       </div>
 
-      {selectedItems.length > 0 && (
-        <SelectedItemsContainer
-          selectedItems={selectedItems}
-          handleChange={handleChange}
-          handleClickFilter={handleClickFilter}
-          clearSelected={clearSelected}
-        />
-      )}
-
       <div className="calendar-btns">
         <div className="prev-next-btn">
           <div className="prev-btn" onClick={() => handlePrevNextClick(-1)}>
@@ -339,6 +330,15 @@ export default function Activities() {
           </div>
         </div>
       </div>
+
+      {selectedItems.length > 0 && (
+        <SelectedItemsContainer
+          selectedItems={selectedItems}
+          handleChange={handleChange}
+          handleClickFilter={handleClickFilter}
+          clearSelected={clearSelected}
+        />
+      )}
 
       <ProductsTable />
     </div>

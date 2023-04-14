@@ -234,15 +234,6 @@ export default function Products() {
         </div>
       </div>
 
-      {selectedItems.length > 0 && (
-        <SelectedItemsContainer
-          selectedItems={selectedItems}
-          handleChange={handleChange}
-          handleClickFilter={handleClickFilter}
-          clearSelected={clearSelected}
-        />
-      )}
-
       <div className="add-item-wrapper">
         <p>Add a Product</p>
         <div className="item-code-wrapper">
@@ -302,6 +293,15 @@ export default function Products() {
           Add
         </div>
       </div>
+
+      {selectedItems.length > 0 && (
+        <SelectedItemsContainer
+          selectedItems={selectedItems}
+          handleChange={handleChange}
+          handleClickFilter={handleClickFilter}
+          clearSelected={clearSelected}
+        />
+      )}
 
       <div className="main-product-wrapper">
         {showProducts ? <ProductsTable /> : null}
