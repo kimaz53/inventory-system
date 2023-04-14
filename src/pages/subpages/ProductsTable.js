@@ -56,6 +56,7 @@ export default function ProductsTable() {
         <table className="table">
           <thead>
             <tr className="tr-tbl">
+              <th>Product Image</th>
               <th>Date Updated</th>
               <th>Item Code</th>
               <th>Item</th>

@@ -24,6 +24,17 @@ const EditableRow = ({ item, handleInputChange, handleCancelClick }) => {
 
   return (
     <tr>
+      <td>
+        <input
+          className="edit-row"
+          type="text"
+          required="required"
+          placeholder="Link..."
+          name="product_image"
+          value={item.product_image}
+          onChange={handleInputChange}
+        />
+      </td>
       <td>{formatDate(item.date_updated)}</td>
       <td>
         <input
@@ -48,15 +59,25 @@ const EditableRow = ({ item, handleInputChange, handleCancelClick }) => {
         />
       </td>
       <td>
-        <input
-          className="edit-row"
-          type="text"
-          required="required"
-          placeholder="Category..."
+        <select
+          className="edit-category"
           name="category"
           value={item.category}
           onChange={handleInputChange}
-        />
+        >
+          <option value="Fresh Produce">Fresh Produce</option>
+          <option value="Dairy">Dairy</option>
+          <option value="Meat">Meat</option>
+          <option value="Bakery">Bakery</option>
+          <option value="Snacks and Packaged Food">
+            Snacks and Packaged Food
+          </option>
+          <option value="Beverages">Beverages</option>
+          <option value="Frozen Food">Frozen Food</option>
+          <option value="Personal Care">Personal Care</option>
+          <option value="Cleaning Supplies">Cleaning Supplies</option>
+          <option value="Miscellaneous">Miscellaneous</option>
+        </select>
       </td>
       <td>{item.yesterday_stocks}</td>
       <td>
