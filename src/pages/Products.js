@@ -1,17 +1,18 @@
 import "../App.css";
 import ProductsTable from "./subpages/ProductsTable";
 import History from "./subpages/History";
-
 import React, { useState, useEffect, useRef } from "react";
 import {
   IoSearchOutline,
   IoCloudUploadOutline,
   IoChevronDownOutline,
+  IoCheckmarkOutline,
 } from "react-icons/io5";
 import { BiFilterAlt } from "react-icons/bi";
 import CheckboxList from "./CheckboxList";
 import SelectedItemsContainer from "./SelectedItemsContainer";
 import RadioList from "./RadioList";
+import axios from "axios";
 
 export default function Products() {
   const [showHistory, setShowHistory] = useState(false);
@@ -29,11 +30,45 @@ export default function Products() {
     setShowProducts(false);
     setShowHistory(true);
   };
+  const [selectedRadioItem, setSelectedRadioItem] = useState("");
 
-  const [inputValue, setInputValue] = useState("");
+  const [items, setItems] = useState({
+    product_image: "",
+    item_code: null,
+    item_name: "",
+    category: "",
+    qty: null,
+  });
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const handleInputChange = (e) => {
+    setItems((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const [itemCode, setItemCode] = useState("");
+
+  const handleItemCodeChange = (event) => {
+    setItemCode(event.target.value);
+  };
+
+  const handleRadioChanges = (e) => {
+    setSelectedRadioItem(e.target.value);
+    setItems((prevState) => ({
+      ...prevState,
+      category: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:3001/items", items);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const [openFilter, setOpenFilter] = useState(false);
@@ -43,12 +78,6 @@ export default function Products() {
   const handleChange = (event) => {
     const { name, checked = false } = event.target;
     setCheckedItems({ ...checkedItems, [name]: checked });
-  };
-
-  const [selectedRadioItem, setSelectedRadioItem] = useState("");
-
-  const handleRadioChanges = (e) => {
-    setSelectedRadioItem(e.target.value);
   };
 
   const clearSelected = () => {
@@ -118,6 +147,8 @@ export default function Products() {
 
   const [openCategory, setOpenCategory] = useState(false);
 
+  const [openImageInput, setOpenImageInput] = useState(false);
+
   return (
     <div className="product-container">
       {openFilter && (
@@ -127,6 +158,28 @@ export default function Products() {
             checkedItems={checkedItems}
             handleChange={handleChange}
           />
+        </div>
+      )}
+
+      {openImageInput && (
+        <div className="image-input-container">
+          <input
+            type="text"
+            name="product_image"
+            placeholder="Image Link..."
+            className="add-itemLink-input"
+            value={items.product_image || ""}
+            onChange={handleInputChange}
+          />
+          <div className="img-link-btns">
+            <div onClick={() => setOpenImageInput(!openImageInput)}>
+              <IoCheckmarkOutline
+                style={{ border: "0.2vw solid #47A515" }}
+                color="#47A515"
+                size="2vw"
+              />
+            </div>
+          </div>
         </div>
       )}
 
@@ -166,8 +219,8 @@ export default function Products() {
             id="myInput"
             placeholder="Search"
             className="search-input"
-            value={inputValue}
-            onChange={handleInputChange}
+            value={itemCode}
+            onChange={handleItemCodeChange}
           />
           <IoSearchOutline className="search-icon" color="#7E7E7E" size="2vw" />
         </div>
@@ -194,11 +247,11 @@ export default function Products() {
         <p>Add a Product</p>
         <div className="item-code-wrapper">
           <input
-            type="text"
+            type="number"
             id="myInput"
             placeholder="Code..."
             className="add-item-input"
-            value={inputValue}
+            name="item_code"
             onChange={handleInputChange}
           />
         </div>
@@ -207,15 +260,18 @@ export default function Products() {
           <input
             type="text"
             id="myInput"
-            placeholder="Item..."
-            className="add-item-input"
-            value={inputValue}
+            placeholder="Title..."
+            className="add-itemName-input"
+            name="item_name"
             onChange={handleInputChange}
           />
         </div>
 
-        <div className="item-wrapper-btn">
-          <p>Image</p>
+        <div
+          className="item-wrapper-btn"
+          onClick={() => setOpenImageInput(!openImageInput)}
+        >
+          <p>{items.product_image || "Image"}</p>
           <IoCloudUploadOutline color="#5D5353" size="2.5vw" />
         </div>
 
@@ -223,6 +279,8 @@ export default function Products() {
           ref={categoryBtn}
           className="item-wrapper-btn"
           onClick={() => setOpenCategory(!openCategory)}
+          name="category"
+          onChange={handleInputChange}
         >
           <p>{selectedRadioItem || "Category"}</p>
 
@@ -231,16 +289,18 @@ export default function Products() {
 
         <div className="item-qty-wrapper">
           <input
-            type="text"
+            type="number"
             id="myInput"
             placeholder="Qty..."
             className="add-item-qty-input"
-            value={inputValue}
+            name="qty"
             onChange={handleInputChange}
           />
         </div>
 
-        <div className="add-btn">Add</div>
+        <div className="add-btn" onClick={handleSubmit}>
+          Add
+        </div>
       </div>
 
       <div className="main-product-wrapper">
