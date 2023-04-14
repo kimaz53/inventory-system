@@ -28,43 +28,26 @@ export default function ProductsTable() {
     }
   };
 
-  const [editItems, setEditItems] = useState({
-    product_image: "",
-    item_code: null,
-    item_name: "",
-    category: "",
-    qty: null,
-  });
+  const [editItemsId, setEditItemsId] = useState(null);
+
+  const [editItem, setEditItem] = useState(null);
 
   const handleInputChange = (e) => {
-    setItems((prev) => ({
+    const { name, value } = e.target;
+    setEditItem((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
 
-  console.log(editItems);
-
-  const [editItemsId, setEditItemsId] = useState(null);
-
-  const handleEdit = (event, items) => {
+  const handleEdit = (event, item) => {
     event.preventDefault();
-    setEditItemsId(items.item_code);
-
-    const formValues = {
-      product_image: items.product_image,
-      item_code: items.item_code,
-      item_name: items.item,
-      category: items.category,
-      yesterday_stocks: items.yesterday_stocks,
-      remaining_stocks: items.remaining_stocks,
-    };
-
-    setEditItems(formValues);
+    setEditItem(item);
+    setEditItemsId(item.item_code);
   };
 
   const handleCancelClick = (e) => {
-    setEditItemsId(0)
+    setEditItemsId(null);
   };
 
   return (
@@ -90,7 +73,7 @@ export default function ProductsTable() {
               <Fragment key={item.item_code}>
                 {editItemsId === item.item_code ? (
                   <EditableRow
-                    items={item}
+                    item={editItem}
                     handleInputChange={handleInputChange}
                     handleCancelClick={handleCancelClick}
                   />

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 function formatDate(dateStr) {
   const date = new Date(dateStr);
@@ -8,21 +9,33 @@ function formatDate(dateStr) {
   return `${year}-${month}-${day}`;
 }
 
-const EditableRow = ({ items, handleInputChange, handleCancelClick }) => {
+const EditableRow = ({ item, handleInputChange, handleCancelClick }) => {
+  const handleSave = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`http://localhost:3001/items/` + item.product_id, item);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(item);
+
   return (
     <tr>
       <td>
-        <input type="checkbox" id={`checkbox-${items.item_code}`} />
+        <input type="checkbox" id={`checkbox-${item.item_code}`} />
       </td>
-      <td>{formatDate(items.date_updated)}</td>
+      <td>{formatDate(item.date_updated)}</td>
       <td>
         <input
           className="edit-row"
-          type="text"
+          type="number"
           required="required"
-          placeholder="Enter a name..."
+          placeholder="Enter a code..."
           name="item_code"
-          value={items.item_code}
+          value={item.item_code}
           onChange={handleInputChange}
         />
       </td>
@@ -32,8 +45,8 @@ const EditableRow = ({ items, handleInputChange, handleCancelClick }) => {
           type="text"
           required="required"
           placeholder="Enter a name..."
-          name="item_code"
-          value={items.item}
+          name="item"
+          value={item.item}
           onChange={handleInputChange}
         />
       </td>
@@ -42,26 +55,28 @@ const EditableRow = ({ items, handleInputChange, handleCancelClick }) => {
           className="edit-row"
           type="text"
           required="required"
-          placeholder="Enter a name..."
-          name="item_code"
-          value={items.category}
+          placeholder="Enter a category..."
+          name="category"
+          value={item.category}
           onChange={handleInputChange}
         />
       </td>
-      <td>{items.yesterday_stocks}</td>
+      <td>{item.yesterday_stocks}</td>
       <td>
         <input
           className="edit-row"
-          type="text"
+          type="number"
           required="required"
-          placeholder="Enter a name..."
-          name="item_code"
-          value={items.remaining_stocks}
+          placeholder="Enter remaining stocks..."
+          name="remaining_stocks"
+          value={item.remaining_stocks}
           onChange={handleInputChange}
         />
       </td>
       <td>
-        <button type="submit">Save</button>
+        <button type="submit" onClick={handleSave}>
+          Save
+        </button>
         <button type="button" onClick={handleCancelClick}>
           Cancel
         </button>

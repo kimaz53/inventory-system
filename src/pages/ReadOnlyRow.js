@@ -21,8 +21,12 @@ const ReadOnlyRow = ({ item, handleEdit, handleDelete }) => {
       <td>{item.yesterday_stocks}</td>
       <td>{item.remaining_stocks}</td>
       <td>
-        <button onClick={(event) => handleEdit(event, item)}>Edit</button>
-        <button onClick={() => handleDelete(item.product_id)}>Delete</button>
+        <button type="button" onClick={(e) => handleEdit(e, item)}>
+          Edit
+        </button>
+        <button type="button" onClick={() => handleDelete(item.product_id)}>
+          Delete
+        </button>
       </td>
     </tr>
   );
