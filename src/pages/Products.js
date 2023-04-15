@@ -47,10 +47,10 @@ export default function Products() {
     }));
   };
 
-  const [itemCode, setItemCode] = useState("");
+  const [searchResult, setSearchResult] = useState("");
 
-  const handleItemCodeChange = (event) => {
-    setItemCode(event.target.value);
+  const handleSearchResultChange = (event) => {
+    setSearchResult(event.target.value);
   };
 
   const handleRadioChanges = (e) => {
@@ -63,6 +63,16 @@ export default function Products() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const nullVariables = Object.keys(items).filter(
+      (key) => items[key] === null
+    );
+
+    if (nullVariables.length > 0) {
+      window.alert(`Please fill in all fields before submitting.`);
+      return;
+    }
+
     try {
       if (window.confirm("Are you sure you want to add this Item?")) {
         await axios.post("http://localhost:3001/items", items);
@@ -79,7 +89,12 @@ export default function Products() {
 
   const handleChange = (event) => {
     const { name, checked = false } = event.target;
-    setCheckedItems({ ...checkedItems, [name]: checked });
+    if (checked) {
+      setCheckedItems({ ...checkedItems, [name]: checked });
+    } else {
+      const { [name]: omit, ...rest } = checkedItems;
+      setCheckedItems(rest);
+    }
   };
 
   const clearSelected = () => {
@@ -221,8 +236,8 @@ export default function Products() {
             id="myInput"
             placeholder="Search"
             className="search-input"
-            value={itemCode}
-            onChange={handleItemCodeChange}
+            value={searchResult}
+            onChange={handleSearchResultChange}
           />
           <IoSearchOutline className="search-icon" color="#7E7E7E" size="2vw" />
         </div>
@@ -306,7 +321,12 @@ export default function Products() {
       )}
 
       <div className="main-product-wrapper">
-        {showProducts ? <ProductsTable /> : null}
+        {showProducts ? (
+          <ProductsTable
+            checkedItems={checkedItems}
+            searchResult={searchResult}
+          />
+        ) : null}
         {showHistory ? <History /> : null}
       </div>
     </div>
