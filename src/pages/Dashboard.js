@@ -13,74 +13,45 @@ import { useState, useEffect, useRef } from "react";
 import ColorThief from "colorthief";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 
 export default function Dashboard() {
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [unreadOnly, setUnreadOnly] = useState(false);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (window.location.pathname === "/dashboard") {
+      const intervalId = setInterval(() => {
+        fetchData();
+      }, 15000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3001/products/items/stocks"
+      );
+      setData(response.data);
+      setFilteredData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const navigate = useNavigate();
 
   function handleLogout() {
     dispatch({ type: "LOGOUT" });
     navigate("/login");
   }
-
-  const [data, setData] = useState([
-    {
-      title: "Item 1",
-      id: 1,
-      image:
-        "https://media.istockphoto.com/id/1215792210/photo/homemade-purple-japanese-ube-ice-cream.jpg?s=612x612&w=0&k=20&c=mKmF0NSxC7mIVIhY3VHGa4nY9xsXuXXtP6P5xaxJ7Rk=",
-      stocks: 73,
-      unread: true,
-    },
-    {
-      title: "Item 2",
-      id: 2,
-      image:
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-      stocks: 62,
-      unread: false,
-    },
-    {
-      title: "Item 3",
-      id: 3,
-      image:
-        "https://images.unsplash.com/photo-1582284540020-8acbe03f4924?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80",
-      stocks: 70,
-      unread: false,
-    },
-    {
-      title: "Item 4",
-      id: 4,
-      image:
-        "https://images.unsplash.com/photo-1499195333224-3ce974eecb47?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1051&q=80",
-      stocks: 0,
-      unread: false,
-    },
-    {
-      title: "Item 5",
-      id: 5,
-      image:
-        "https://images.unsplash.com/photo-1553456558-aff63285bdd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      stocks: 0,
-      unread: true,
-    },
-    {
-      title: "Item 6",
-      id: 6,
-      image:
-        "https://plus.unsplash.com/premium_photo-1676037839664-6f52faa56a81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
-      stocks: 51,
-      unread: true,
-    },
-    {
-      title: "Item 7",
-      id: 7,
-      image:
-        "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      stocks: 60,
-      unread: true,
-    },
-    // more data items...
-  ]);
 
   const [dominantColors, setDominantColors] = useState([]);
 
@@ -115,31 +86,27 @@ export default function Dashboard() {
     setUnreadItems(count);
   }, [data]);
 
-  const handleMarkAllAsRead = () => {
-    setUnreadItems(0);
-    setData((prevData) =>
-      prevData.map((item) => {
-        return {
-          ...item,
-          unread: false,
-        };
-      })
-    );
-  };
   const [selectedItemId, setSelectedItemId] = useState(null);
 
-  const handleItemClick = (id) => {
+  const handleMarkAllAsRead = async () => {
+    setUnreadOnly(false);
+    try {
+      await axios.put("http://localhost:3001/read");
+      fetchData();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleItemClick = async (id) => {
     dispatch({ type: "SET_SELECTED_ITEM_ID", payload: id });
-    setData((prevData) => {
-      const newData = [...prevData];
-      const itemIndex = newData.findIndex((item) => item.id === id);
-      if (itemIndex >= 0) {
-        newData[itemIndex].unread = false;
-        setSelectedItemId(newData[itemIndex].id);
-        return newData;
-      }
-      return prevData;
-    });
+    setSelectedItemId(id);
+    try {
+      await axios.put("http://localhost:3001/products/items/stocks/" + id);
+      fetchData();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const dispatch = useDispatch();
@@ -149,29 +116,24 @@ export default function Dashboard() {
       const selectedItem = data.find((item) => item.id === selectedItemId);
       if (selectedItem) {
         if (selectedItem.stocks > 0) {
-          navigate("/products/overstock", {
-            state: { selectedItemId },
-          });
+          navigate("/products/overstock");
         } else {
-          navigate("/products/nostock", {
-            state: { selectedItemId },
-          });
+          navigate("/products/nostock");
         }
       }
     }
   }, [selectedItemId, data, navigate]);
 
-  const [unreadOnly, setUnreadOnly] = useState(false);
-
   const handleAllClick = () => {
     setUnreadOnly(false);
+    setFilteredData(data);
   };
 
   const handleUnreadClick = () => {
     setUnreadOnly(true);
+    const filtered = data.filter((item) => item.unread === 1);
+    setFilteredData(filtered);
   };
-
-  const filteredData = unreadOnly ? data.filter((item) => item.unread) : data;
 
   const [unreadItems, setUnreadItems] = useState(
     data.filter((item) => item.unread).length
@@ -298,14 +260,19 @@ export default function Dashboard() {
             </div>
 
             <div className="grid-items">
-              {filteredData.length === 0 && unreadItems === 0 && (
+              {filteredData.length === 0 && (
                 <div className="caught-up-message">
                   <p>You're All Caught Up.</p>
                 </div>
               )}
               {filteredData.map((item, index) => (
                 <div
-                  style={{ backgroundColor: dominantColors[index] }}
+                  style={{
+                    backgroundColor:
+                      dominantColors[
+                        data.findIndex((items) => items.id === item.id)
+                      ],
+                  }}
                   className="item-wrap"
                   key={index}
                   onClick={() => handleItemClick(item.id)}
@@ -325,7 +292,7 @@ export default function Dashboard() {
                       {item.stocks} stocks available
                     </p>
                   </div>
-                  {item.unread && <div className="unread-circle"></div>}
+                  {item.unread === 1 && <div className="unread-circle"></div>}
                 </div>
               ))}
             </div>
