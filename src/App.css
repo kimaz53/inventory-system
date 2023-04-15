@@ -1555,6 +1555,7 @@
     width: 340px;
     height: 340px;
     border-radius: 10px;
+    user-select: none;
 }
 
 .bottom-wrap {
@@ -1577,6 +1578,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .plus-btnss {
@@ -1587,6 +1589,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .qty-fields {
