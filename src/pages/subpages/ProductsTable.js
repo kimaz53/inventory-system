@@ -4,7 +4,7 @@ import axios from "axios";
 import ReadOnlyRow from "../ReadOnlyRow";
 import EditableRow from "../EditableRow";
 
-export default function ProductsTable() {
+export default function ProductsTable({ checkedItems, searchResult }) {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -73,23 +73,60 @@ export default function ProductsTable() {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
-              <Fragment key={item.item_code}>
-                {editItemsId === item.item_code ? (
-                  <EditableRow
-                    item={editItem}
-                    handleInputChange={handleInputChange}
-                    handleCancelClick={handleCancelClick}
-                  />
-                ) : (
-                  <ReadOnlyRow
-                    item={item}
-                    handleEdit={handleEdit}
-                    confirmDelete={confirmDelete}
-                  />
-                )}
-              </Fragment>
-            ))}
+            {Object.keys(checkedItems).length === 0
+              ? items
+                  .filter((item) => {
+                    const values = Object.values(item).map((value) =>
+                      value.toString().toLowerCase()
+                    );
+                    return values.some((value) =>
+                      value.includes(searchResult.toLowerCase())
+                    );
+                  })
+                  .map((item) => (
+                    <Fragment key={item.item_code}>
+                      {editItemsId === item.item_code ? (
+                        <EditableRow
+                          item={editItem}
+                          handleInputChange={handleInputChange}
+                          handleCancelClick={handleCancelClick}
+                        />
+                      ) : (
+                        <ReadOnlyRow
+                          item={item}
+                          handleEdit={handleEdit}
+                          confirmDelete={confirmDelete}
+                        />
+                      )}
+                    </Fragment>
+                  ))
+              : items
+                  .filter((item) => checkedItems[item.category])
+                  .filter((item) => {
+                    const values = Object.values(item).map((value) =>
+                      value.toString().toLowerCase()
+                    );
+                    return values.some((value) =>
+                      value.includes(searchResult.toLowerCase())
+                    );
+                  })
+                  .map((item) => (
+                    <Fragment key={item.item_code}>
+                      {editItemsId === item.item_code ? (
+                        <EditableRow
+                          item={editItem}
+                          handleInputChange={handleInputChange}
+                          handleCancelClick={handleCancelClick}
+                        />
+                      ) : (
+                        <ReadOnlyRow
+                          item={item}
+                          handleEdit={handleEdit}
+                          confirmDelete={confirmDelete}
+                        />
+                      )}
+                    </Fragment>
+                  ))}
           </tbody>
         </table>
       </div>
