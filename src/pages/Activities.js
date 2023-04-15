@@ -15,10 +15,10 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
 export default function Activities() {
-  const [inputValue, setInputValue] = useState("");
+  const [searchResult, setSearchResult] = useState("");
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const handleSearchResultChange = (event) => {
+    setSearchResult(event.target.value);
   };
 
   const [openFilter, setOpenFilter] = useState(false);
@@ -27,7 +27,12 @@ export default function Activities() {
 
   const handleChange = (event) => {
     const { name, checked = false } = event.target;
-    setCheckedItems({ ...checkedItems, [name]: checked });
+    if (checked) {
+      setCheckedItems({ ...checkedItems, [name]: checked });
+    } else {
+      const { [name]: omit, ...rest } = checkedItems;
+      setCheckedItems(rest);
+    }
   };
 
   const clearSelected = () => {
@@ -255,8 +260,8 @@ export default function Activities() {
             id="myInput"
             placeholder="Search"
             className="search-input"
-            value={inputValue}
-            onChange={handleInputChange}
+            value={searchResult}
+            onChange={handleSearchResultChange}
           />
           <IoSearchOutline className="search-icon" color="#7E7E7E" size="2vw" />
         </div>
@@ -340,7 +345,7 @@ export default function Activities() {
         />
       )}
 
-      <ProductsTable />
+      <ProductsTable checkedItems={checkedItems} searchResult={searchResult} />
     </div>
   );
 }
