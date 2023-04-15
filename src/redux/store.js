@@ -1,11 +1,24 @@
 import { createStore } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 const storedIsLogin = localStorage.getItem("isLogin");
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["selectedItemId", "data"],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const initialState = {
-  selectedItemId: 0,
+  selectedItemId: null,
   username: "",
   password: "",
   isLogin: storedIsLogin === "true",
+  data: [],
+  dataz: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -20,6 +33,10 @@ function rootReducer(state = initialState, action) {
         password: action.payload.password,
         isLogin: true,
       };
+    case "SET_NO_STOCK_DATA":
+      return { ...state, data: action.payload };
+      case "SET_OVER_STOCK_DATA":
+        return { ...state, dataz: action.payload };
     case "LOGOUT":
       localStorage.removeItem("isLogin");
       return {
@@ -33,11 +50,28 @@ function rootReducer(state = initialState, action) {
         ...state,
         isLogin: true,
       };
+
     default:
       return state;
   }
 }
 
-const store = createStore(rootReducer);
+const store = createStore(persistedReducer);
+const persistor = persistStore(store);
 
-export default store;
+export const updateData = (newData) => {
+  return {
+    type: "SET_NO_STOCK_DATA",
+    payload: newData,
+  };
+};
+
+export const updateOverStock = (newData) => {
+  return {
+    type: "SET_OVER_STOCK_DATA",
+    payload: newData,
+  };
+};
+
+
+export { store, persistor };
