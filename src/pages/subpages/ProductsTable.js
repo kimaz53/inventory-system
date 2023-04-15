@@ -28,6 +28,12 @@ export default function ProductsTable() {
     }
   };
 
+  const confirmDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      handleDelete(id);
+    }
+  };
+
   const [editItemsId, setEditItemsId] = useState(null);
 
   const [editItem, setEditItem] = useState(null);
@@ -79,7 +85,7 @@ export default function ProductsTable() {
                   <ReadOnlyRow
                     item={item}
                     handleEdit={handleEdit}
-                    handleDelete={handleDelete}
+                    confirmDelete={confirmDelete}
                   />
                 )}
               </Fragment>

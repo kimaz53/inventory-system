@@ -11,7 +11,7 @@ function formatDate(dateStr) {
   return `${year}-${month}-${day}`;
 }
 
-const ReadOnlyRow = ({ item, handleEdit, handleDelete }) => {
+const ReadOnlyRow = ({ item, handleEdit, confirmDelete }) => {
   return (
     <tr>
       <td className="item-img-container">
@@ -30,7 +30,7 @@ const ReadOnlyRow = ({ item, handleEdit, handleDelete }) => {
           size="1.5vw"
         />
         <AiOutlineDelete
-          onClick={() => handleDelete(item.product_id)}
+          onClick={() => confirmDelete(item.product_id)}
           color="#DD1F58"
           size="1.5vw"
         />

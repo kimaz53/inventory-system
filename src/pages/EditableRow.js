@@ -15,8 +15,10 @@ const EditableRow = ({ item, handleInputChange, handleCancelClick }) => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3001/items/` + item.product_id, item);
-      window.location.reload();
+      if (window.confirm("Are you sure you want to save changes?")) {
+        await axios.put(`http://localhost:3001/items/` + item.product_id, item);
+        window.location.reload();
+      }
     } catch (err) {
       console.log(err);
     }

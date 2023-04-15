@@ -64,8 +64,10 @@ export default function Products() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3001/items", items);
-      window.location.reload();
+      if (window.confirm("Are you sure you want to add this Item?")) {
+        await axios.post("http://localhost:3001/items", items);
+        window.location.reload();
+      }
     } catch (err) {
       console.log(err);
     }
