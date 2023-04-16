@@ -3,6 +3,7 @@ import { useState, useEffect, Fragment } from "react";
 import axios from "axios";
 import ReadOnlyRow from "../ReadOnlyRow";
 import EditableRow from "../EditableRow";
+import noData from "../../noData.png";
 
 export default function ProductsTable({ checkedItems, searchResult }) {
   const [items, setItems] = useState([]);
@@ -56,6 +57,27 @@ export default function ProductsTable({ checkedItems, searchResult }) {
     setEditItemsId(null);
   };
 
+  const filteredData =
+    Object.keys(checkedItems).length === 0
+      ? items.filter((item) => {
+          const values = Object.values(item).map((value) =>
+            value.toString().toLowerCase()
+          );
+          return values.some((value) =>
+            value.includes(searchResult.toLowerCase())
+          );
+        })
+      : items
+          .filter((item) => checkedItems[item.category])
+          .filter((item) => {
+            const values = Object.values(item).map((value) =>
+              value.toString().toLowerCase()
+            );
+            return values.some((value) =>
+              value.includes(searchResult.toLowerCase())
+            );
+          });
+
   return (
     <div className="table-container">
       <div>
@@ -73,60 +95,41 @@ export default function ProductsTable({ checkedItems, searchResult }) {
             </tr>
           </thead>
           <tbody>
-            {Object.keys(checkedItems).length === 0
-              ? items
-                  .filter((item) => {
-                    const values = Object.values(item).map((value) =>
-                      value.toString().toLowerCase()
-                    );
-                    return values.some((value) =>
-                      value.includes(searchResult.toLowerCase())
-                    );
-                  })
-                  .map((item) => (
-                    <Fragment key={item.item_code}>
-                      {editItemsId === item.item_code ? (
-                        <EditableRow
-                          item={editItem}
-                          handleInputChange={handleInputChange}
-                          handleCancelClick={handleCancelClick}
-                        />
-                      ) : (
-                        <ReadOnlyRow
-                          item={item}
-                          handleEdit={handleEdit}
-                          confirmDelete={confirmDelete}
-                        />
-                      )}
-                    </Fragment>
-                  ))
-              : items
-                  .filter((item) => checkedItems[item.category])
-                  .filter((item) => {
-                    const values = Object.values(item).map((value) =>
-                      value.toString().toLowerCase()
-                    );
-                    return values.some((value) =>
-                      value.includes(searchResult.toLowerCase())
-                    );
-                  })
-                  .map((item) => (
-                    <Fragment key={item.item_code}>
-                      {editItemsId === item.item_code ? (
-                        <EditableRow
-                          item={editItem}
-                          handleInputChange={handleInputChange}
-                          handleCancelClick={handleCancelClick}
-                        />
-                      ) : (
-                        <ReadOnlyRow
-                          item={item}
-                          handleEdit={handleEdit}
-                          confirmDelete={confirmDelete}
-                        />
-                      )}
-                    </Fragment>
-                  ))}
+            {filteredData.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={9}
+                  style={{
+                    height: "50vh",
+                    verticalAlign: "top",
+                    paddingTop: "2.5vw",
+                  }}
+                >
+                  <div className="no-datas">
+                    <img src={noData} className="no-datas-img" alt="logo" />
+                    <p>No products here.</p>
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              filteredData.map((item) => (
+                <Fragment key={item.item_code}>
+                  {editItemsId === item.item_code ? (
+                    <EditableRow
+                      item={editItem}
+                      handleInputChange={handleInputChange}
+                      handleCancelClick={handleCancelClick}
+                    />
+                  ) : (
+                    <ReadOnlyRow
+                      item={item}
+                      handleEdit={handleEdit}
+                      confirmDelete={confirmDelete}
+                    />
+                  )}
+                </Fragment>
+              ))
+            )}
           </tbody>
         </table>
       </div>
