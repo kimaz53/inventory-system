@@ -16,9 +16,17 @@ export default function OverStock() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.dataz);
 
+  const selectedItemId = useSelector((state) => state.selectedItemId);
+  const [selectedItem, setSelectedItem] = useState(selectedItemId);
+
   const navigate = useNavigate();
   const [dominantColors, setDominantColors] = useState([]);
+
   const [qty, setQty] = useState(0);
+
+  const [inputQty, setInputQty] = useState(qty);
+
+  const [noProducts, setNoProducts] = useState(false);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -26,13 +34,27 @@ export default function OverStock() {
         const res = await axios.get(
           "http://localhost:3001/products/items/stocks"
         );
+        if (!Array.isArray(res.data)) {
+          throw new Error("Unexpected API response");
+        }
         dispatch(updateOverStock(res.data));
+
+        const haveProducts = res.data.some((item) => item.stocks > 50);
+
+        if (haveProducts === true) {
+          setNoProducts(true);
+        }
+
+        const selected = res.data.find((item) => item.id === selectedItemId);
+        if (selected && selected.stocks) {
+          setQty(selected.stocks);
+        }
       } catch (err) {
         console.log(err);
       }
     };
     fetchItems();
-  }, [dispatch]);
+  }, [dispatch, selectedItemId]);
 
   useEffect(() => {
     const colorThief = new ColorThief();
@@ -55,17 +77,32 @@ export default function OverStock() {
     });
   }, [data]);
 
-  const selectedItemId = useSelector((state) => state.selectedItemId);
-  const [selectedItem, setSelectedItem] = useState(selectedItemId);
-
   const handleQtyChanges = (itemId, value) => {
     setQty(qty + value);
+    setInputQty(inputQty + value);
     setSelectedItem(itemId);
   };
 
   const ref = useRef(null);
 
+  const [items, setItems] = useState([]);
+
   useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/products/items");
+        setItems(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchItems();
+  }, [selectedItem, items]);
+
+  useEffect(() => {
+    const selectedItemData = data.find((item) => item.id === selectedItem);
+    const originalQty = selectedItemData ? selectedItemData.stocks : 0;
+
     const handleMouseDown = async (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
         setSelectedItem(null);
@@ -73,24 +110,44 @@ export default function OverStock() {
           type: "SET_SELECTED_ITEM_ID",
           payload: null,
         });
-        try {
-          if (
-            window.confirm(
-              "Are you sure you want to update this item's stocks?"
-            )
-          ) {
-            await axios.put(
-              `http://localhost:3001/products/stocks/update/${selectedItem}`,
-              {
-                remainingStocks: qty,
-              }
-            );
-
-            window.location.reload();
+        if (qty !== originalQty) {
+          try {
+            if (
+              window.confirm(
+                "Are you sure you want to update this item's stocks?"
+              )
+            ) {
+              await axios.put(
+                `http://localhost:3001/products/stocks/update/${selectedItem}`,
+                {
+                  remainingStocks: qty,
+                  productId: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).product_id,
+                  productImage: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).product_image,
+                  itemCode: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).item_code,
+                  item: items.find((item) => item.item_code === selectedItem)
+                    .item,
+                  category: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).category,
+                  quantity: inputQty,
+                  stocksBefore: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).remaining_stocks,
+                }
+              );
+              window.location.reload();
+            }
+          } catch (err) {
+            console.log(err);
           }
           setQty(0);
-        } catch (err) {
-          console.log(err);
+          setInputQty(0);
         }
       }
     };
@@ -98,7 +155,14 @@ export default function OverStock() {
     return () => {
       document.body.removeEventListener("mousedown", handleMouseDown);
     };
-  }, [setSelectedItem, dispatch, qty, selectedItem]);
+  }, [setSelectedItem, dispatch, qty, selectedItem, items, inputQty, data]);
+
+  const handleQtyInput = (e) => {
+    const input = parseInt(e.target.value);
+    const item = data.find((item) => item.id === selectedItem).stocks;
+    setQty(parseInt(e.target.value));
+    setInputQty(input - item);
+  };
 
   const handleSetSelectedItemId = (id) => {
     setQty(data.find((item) => item.id === id).stocks);
@@ -162,7 +226,7 @@ export default function OverStock() {
                           type="number"
                           className="qty-fields"
                           value={qty}
-                          onChange={(e) => setQty(parseInt(e.target.value))}
+                          onChange={handleQtyInput}
                         />
                         <div className="underline"></div>
                       </div>
@@ -188,7 +252,7 @@ export default function OverStock() {
           <h1 style={{ color: "#7E7E7E" }}>Products overstocked</h1>
         </div>
       </div>
-      {data.length === 0 ? (
+      {!noProducts ? (
         <div className="no-data">
           <img src={noData} className="no-data-img" alt="logo" />
           <p>No products here.</p>

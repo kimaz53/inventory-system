@@ -20,12 +20,19 @@ export default function NoStock() {
   const [dominantColors, setDominantColors] = useState([]);
   const [qty, setQty] = useState(0);
 
+  const [noProducts, setNoProducts] = useState(false);
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const res = await axios.get(
           "http://localhost:3001/products/items/stocks"
         );
+
+        const haveProducts = res.data.some((item) => item.stocks === 0);
+
+        setNoProducts(haveProducts);
+
         dispatch(updateData(res.data));
       } catch (err) {
         console.log(err);
@@ -65,7 +72,24 @@ export default function NoStock() {
 
   const ref = useRef(null);
 
+  const [items, setItems] = useState([]);
+
   useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/products/items");
+        setItems(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchItems();
+  }, []);
+
+  useEffect(() => {
+    const selectedItemData = data.find((item) => item.id === selectedItem);
+    const originalQty = selectedItemData ? selectedItemData.stocks : 0;
+
     const handleMouseDown = async (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
         setSelectedItem(null);
@@ -73,24 +97,43 @@ export default function NoStock() {
           type: "SET_SELECTED_ITEM_ID",
           payload: null,
         });
-        try {
-          if (
-            window.confirm(
-              "Are you sure you want to update this item's stocks?"
-            )
-          ) {
-            await axios.put(
-              `http://localhost:3001/products/stocks/update/${selectedItem}`,
-              {
-                remainingStocks: qty,
-              }
-            );
-
-            window.location.reload();
+        if (qty !== originalQty) {
+          try {
+            if (
+              window.confirm(
+                "Are you sure you want to update this item's stocks?"
+              )
+            ) {
+              await axios.put(
+                `http://localhost:3001/products/stocks/update/${selectedItem}`,
+                {
+                  remainingStocks: qty,
+                  productId: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).product_id,
+                  productImage: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).product_image,
+                  itemCode: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).item_code,
+                  item: items.find((item) => item.item_code === selectedItem)
+                    .item,
+                  category: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).category,
+                  quantity: qty,
+                  stocksBefore: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).remaining_stocks,
+                }
+              );
+              window.location.reload();
+            }
+          } catch (err) {
+            console.log(err);
           }
           setQty(0);
-        } catch (err) {
-          console.log(err);
         }
       }
     };
@@ -98,7 +141,7 @@ export default function NoStock() {
     return () => {
       document.body.removeEventListener("mousedown", handleMouseDown);
     };
-  }, [setSelectedItem, dispatch, qty, selectedItem]);
+  }, [setSelectedItem, dispatch, qty, selectedItem, items, data]);
 
   const handleSetSelectedItemId = (id) => {
     setSelectedItem(id);
@@ -106,6 +149,10 @@ export default function NoStock() {
       type: "SET_SELECTED_ITEM_ID",
       payload: id,
     });
+  };
+
+  const handleQtyInput = (e) => {
+    setQty(parseInt(e.target.value));
   };
 
   return (
@@ -161,7 +208,7 @@ export default function NoStock() {
                           type="number"
                           className="qty-fields"
                           value={qty}
-                          onChange={(e) => setQty(parseInt(e.target.value))}
+                          onChange={handleQtyInput}
                         />
                         <div className="underline"></div>
                       </div>
@@ -187,7 +234,7 @@ export default function NoStock() {
           <h1 style={{ color: "#7E7E7E" }}>Products out of Stock</h1>
         </div>
       </div>
-      {data.length === 0 ? (
+      {!noProducts ? (
         <div className="no-data">
           <img src={noData} className="no-data-img" alt="logo" />
           <p>No products here.</p>
