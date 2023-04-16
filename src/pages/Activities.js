@@ -12,7 +12,13 @@ import SelectedItemsContainer from "./SelectedItemsContainer";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import History from "./subpages/History";
+import ActivitiesTable from "./subpages/ActivitiesTable";
+
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  const options = { month: "long", day: "numeric", year: "numeric" };
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+}
 
 export default function Activities() {
   const [searchResult, setSearchResult] = useState("");
@@ -305,8 +311,8 @@ export default function Activities() {
 
         <div className="date-wrapper">
           <h1>
-            {dateRange[0]?.startDate?.toLocaleDateString()} -{" "}
-            {dateRange[0]?.endDate?.toLocaleDateString()}
+            {formatDate(dateRange[0].startDate)} -{" "}
+            {formatDate(dateRange[0].endDate)}
           </h1>
         </div>
 
@@ -345,7 +351,11 @@ export default function Activities() {
         />
       )}
 
-      <History checkedItems={checkedItems} searchResult={searchResult} />
+      <ActivitiesTable
+        dateRange={dateRange}
+        checkedItems={checkedItems}
+        searchResult={searchResult}
+      />
     </div>
   );
 }
