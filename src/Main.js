@@ -26,7 +26,7 @@ function Main() {
       setContentWrapperHeight(contentWrapperHeight);
     };
 
-    handleResize(); // initial call to set the height
+    handleResize();
 
     window.addEventListener("resize", handleResize);
 
