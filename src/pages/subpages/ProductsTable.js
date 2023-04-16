@@ -98,7 +98,7 @@ export default function ProductsTable({ checkedItems, searchResult }) {
             {filteredData.length === 0 ? (
               <tr>
                 <td
-                  colSpan={9}
+                  colSpan={10}
                   style={{
                     height: "50vh",
                     verticalAlign: "top",

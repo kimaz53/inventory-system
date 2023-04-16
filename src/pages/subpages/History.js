@@ -65,13 +65,14 @@ export default function History({ checkedItems, searchResult }) {
               <th>Operation Description</th>
               <th>Stocks Before</th>
               <th>Stocks After</th>
+              <th>Total Stocks</th>
             </tr>
           </thead>
           <tbody>
             {filteredData.length === 0 ? (
               <tr>
                 <td
-                  colSpan={9}
+                  colSpan={10}
                   style={{
                     height: "50vh",
                     verticalAlign: "top",
@@ -86,6 +87,7 @@ export default function History({ checkedItems, searchResult }) {
               </tr>
             ) : (
               filteredData.map((item) => (
+                
                 <tr key={item.id}>
                   <td className="item-img-container">
                     <img className="item-img" src={item.product_image} alt="" />
@@ -98,6 +100,7 @@ export default function History({ checkedItems, searchResult }) {
                   <td>{item.operation_desc}</td>
                   <td>{item.stocks_before}</td>
                   <td>{item.stocks_after}</td>
+                  <td>{item.total_stocks}</td>
                 </tr>
               ))
             )}
