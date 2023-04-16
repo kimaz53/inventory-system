@@ -7,7 +7,7 @@ const storedIsLogin = localStorage.getItem("isLogin");
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["selectedItemId", "data"],
+  whitelist: ["selectedItemId", "data", "dataz"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -18,7 +18,7 @@ const initialState = {
   password: "",
   isLogin: storedIsLogin === "true",
   data: [],
-  dataz: []
+  dataz: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -35,8 +35,8 @@ function rootReducer(state = initialState, action) {
       };
     case "SET_NO_STOCK_DATA":
       return { ...state, data: action.payload };
-      case "SET_OVER_STOCK_DATA":
-        return { ...state, dataz: action.payload };
+    case "SET_OVER_STOCK_DATA":
+      return { ...state, dataz: action.payload };
     case "LOGOUT":
       localStorage.removeItem("isLogin");
       return {
@@ -72,6 +72,5 @@ export const updateOverStock = (newData) => {
     payload: newData,
   };
 };
-
 
 export { store, persistor };
