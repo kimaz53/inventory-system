@@ -183,29 +183,35 @@ export default function ActivitiesTable({
                           (filteredItem) =>
                             filteredItem.item_code === item.item_code
                         )
-                        .map((filteredItem) => (
-                          <tr
-                            style={{ backgroundColor: "#DCDCDC" }}
-                            key={filteredItem.id}
-                          >
-                            <td className="item-img-container">
-                              <img
-                                className="item-img"
-                                src={filteredItem.product_image}
-                                alt=""
-                              />
-                            </td>
-                            <td>{formatDate(filteredItem.date_updated)}</td>
-                            <td>{filteredItem.item_code}</td>
-                            <td>{filteredItem.item}</td>
-                            <td>{filteredItem.category}</td>
-                            <td>{filteredItem.quantity}</td>
-                            <td>{filteredItem.operation_desc}</td>
-                            <td>{filteredItem.stocks_before}</td>
-                            <td>{filteredItem.stocks_after}</td>
-                            <td>{filteredItem.total_stocks}</td>
-                          </tr>
+                        .map((filteredItem, index) => (
+                          <React.Fragment key={filteredItem.id}>
+                            <>
+                              {index > 0 && (
+                                <tr style={{ backgroundColor: "#DCDCDC" }}>
+                                  <td className="item-img-container">
+                                    <img
+                                      className="item-img"
+                                      src={filteredItem.product_image}
+                                      alt=""
+                                    />
+                                  </td>
+                                  <td>
+                                    {formatDate(filteredItem.date_updated)}
+                                  </td>
+                                  <td>{filteredItem.item_code}</td>
+                                  <td>{filteredItem.item}</td>
+                                  <td>{filteredItem.category}</td>
+                                  <td>{filteredItem.quantity}</td>
+                                  <td>{filteredItem.operation_desc}</td>
+                                  <td>{filteredItem.stocks_before}</td>
+                                  <td>{filteredItem.stocks_after}</td>
+                                  <td>{filteredItem.total_stocks}</td>
+                                </tr>
+                              )}
+                            </>
+                          </React.Fragment>
                         ))}
+
                       <tr>
                         <td colSpan="10" style={{ backgroundColor: "#DCDCDC" }}>
                           --- End of Items. ---
