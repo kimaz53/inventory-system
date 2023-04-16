@@ -2113,3 +2113,19 @@ table {
 .item-img-container {
     padding: 0;
 }
+
+.no-datas {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.no-datas p {
+    color: #5D5353;
+    font-size: 1vw;
+}
+
+.no-datas-img {
+    height: 9vw;
+    width: 7.5vw;
+}
