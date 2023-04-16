@@ -70,6 +70,10 @@ export default function NoStock() {
     setSelectedItem(itemId);
   };
 
+  useEffect(() => {
+    setQty(qty);
+  }, [qty]);
+
   const ref = useRef(null);
 
   const [items, setItems] = useState([]);
@@ -126,6 +130,9 @@ export default function NoStock() {
                   stocksBefore: items.find(
                     (item) => item.item_code === selectedItem
                   ).remaining_stocks,
+                  totalStocks: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).total_stocks,
                 }
               );
               window.location.reload();

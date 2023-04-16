@@ -83,6 +83,10 @@ export default function OverStock() {
     setSelectedItem(itemId);
   };
 
+  useEffect(() => {
+    setQty(qty);
+  }, [qty]);
+
   const ref = useRef(null);
 
   const [items, setItems] = useState([]);
@@ -139,6 +143,9 @@ export default function OverStock() {
                   stocksBefore: items.find(
                     (item) => item.item_code === selectedItem
                   ).remaining_stocks,
+                  totalStocks: items.find(
+                    (item) => item.item_code === selectedItem
+                  ).total_stocks,
                 }
               );
               window.location.reload();
@@ -165,7 +172,6 @@ export default function OverStock() {
   };
 
   const handleSetSelectedItemId = (id) => {
-    setQty(data.find((item) => item.id === id).stocks);
     setSelectedItem(id);
     dispatch({
       type: "SET_SELECTED_ITEM_ID",
