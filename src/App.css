@@ -2000,6 +2000,15 @@ input[type=checkbox] {
     font-weight: 500;
 }
 
+.table-container tr:hover {
+    cursor: pointer;
+    background-color: #B5B5B5;
+}
+
+tr.expanded {
+    background-color: #B5B5B5;
+}
+
 table th {
     text-align: center;
     padding: 0vw 1vw 0vw 1vw;
@@ -2078,6 +2087,10 @@ table {
     justify-content: center;
     align-items: center;
     border-radius: 0.4vw;
+}
+
+.img-link-btns svg:hover {
+    cursor: pointer;
 }
 
 .edit-row,
