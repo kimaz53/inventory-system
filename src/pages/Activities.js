@@ -5,7 +5,6 @@ import {
   IoChevronBackOutline,
   IoChevronForwardOutline,
 } from "react-icons/io5";
-import ProductsTable from "./subpages/ProductsTable";
 import { BiFilterAlt } from "react-icons/bi";
 import { CiCalendar } from "react-icons/ci";
 import CheckboxList from "./CheckboxList";
@@ -13,6 +12,7 @@ import SelectedItemsContainer from "./SelectedItemsContainer";
 import { DateRangePicker } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import History from "./subpages/History";
 
 export default function Activities() {
   const [searchResult, setSearchResult] = useState("");
@@ -345,7 +345,7 @@ export default function Activities() {
         />
       )}
 
-      <ProductsTable checkedItems={checkedItems} searchResult={searchResult} />
+      <History checkedItems={checkedItems} searchResult={searchResult} />
     </div>
   );
 }
