@@ -99,6 +99,7 @@ export default function Products() {
 
   const clearSelected = () => {
     setCheckedItems({});
+    window.location.reload();
   };
 
   const selectedItems = Object.keys(checkedItems).filter(
@@ -327,7 +328,9 @@ export default function Products() {
             searchResult={searchResult}
           />
         ) : null}
-        {showHistory ? <History /> : null}
+        {showHistory ? (
+          <History checkedItems={checkedItems} searchResult={searchResult} />
+        ) : null}
       </div>
     </div>
   );
