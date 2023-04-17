@@ -5,20 +5,26 @@ import boxes from "../../src/boxes.png";
 import emptyboxes from "../../src/emptybox.png";
 import {
   IoSearchOutline,
-  IoPersonCircleOutline,
   IoNotificationsOutline,
   IoCloseCircleOutline,
+  IoFileTray,
+  IoFileTrayFull,
+  IoLogOut,
+  IoChevronForwardSharp,
 } from "react-icons/io5";
 import { useState, useEffect, useRef } from "react";
 import ColorThief from "colorthief";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [unreadOnly, setUnreadOnly] = useState(false);
+  const userImage = useSelector((state) => state.user_image);
+
+  const [profileClicked, setProfileClicked] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -46,11 +52,26 @@ export default function Dashboard() {
     }
   };
 
+  const [items, setItems] = useState([]);
+  const outOfStock = items.filter((item) => item.remaining_stocks === 0).length;
+  const overStock = items.filter((item) => item.remaining_stocks > 50).length;
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/products/items");
+        setItems(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchItems();
+  }, []);
+
   const navigate = useNavigate();
 
-  function handleLogout() {
-    dispatch({ type: "LOGOUT" });
-    navigate("/login");
+  function handleProfileClick() {
+    setProfileClicked(!profileClicked);
   }
 
   const [dominantColors, setDominantColors] = useState([]);
@@ -161,12 +182,123 @@ export default function Dashboard() {
     };
   });
 
+  const profileButtonRef = useRef(null);
+  const profileRef = useRef(null);
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(e.target) &&
+        !profileButtonRef.current.contains(e.target)
+      ) {
+        setProfileClicked(false);
+      }
+    };
+
+    document.body.addEventListener("mousedown", handler);
+    return () => {
+      document.body.removeEventListener("mousedown", handler);
+    };
+  });
+
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <div className="stock-container">
+      {profileClicked && (
+        <div ref={profileRef} className="profile-wrapper">
+          <div className="wrap-profile">
+            <div className="profile-btn-container">
+              <div
+                style={{ marginTop: "1vw", marginLeft: "1vw" }}
+                className="image-wrapper"
+              >
+                <img
+                  style={{ height: "8vw", width: "4vw", objectFit: "cover" }}
+                  src={userImage}
+                  alt=""
+                />
+              </div>
+              <div
+                style={{
+                  margin: "0",
+                  height: "0.1vw",
+                  backgroundColor: "#B5B5B5",
+                  marginLeft: "1vw",
+                  width: "20.7vw",
+                  marginTop: "1vw",
+                }}
+              ></div>
+              <div
+                style={{ marginTop: "1vw", marginLeft: "1vw" }}
+                className="manage-products-link"
+              >
+                <div
+                  ref={ref}
+                  style={{
+                    fontSize: "1vw",
+                    color: "#FFFFFF",
+                    marginTop: "7.5vw",
+                    marginRight: "1.5vw",
+                    width: "1.2vw",
+                    height: "1.2vw",
+                    textAlign: "center",
+                    justifyContent: "center",
+                  }}
+                  className="notifBall"
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  {data.length}
+                </div>
+                <p onClick={() => navigate("/products")}>
+                  Manage your products
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="btns-wrap">
+            <div
+              className="profile-links"
+              onClick={() => navigate("/products/nostock")}
+            >
+              <div className="icon-container">
+                <IoFileTray color="#5D5353" size="1.5vw" />
+              </div>
+              <p>Check Out of Stocks</p>
+              <IoChevronForwardSharp
+                style={{ marginLeft: "8vw" }}
+                color="#5D5353"
+                size="1.5vw"
+              />
+            </div>
+            <div
+              className="profile-links"
+              onClick={() => navigate("/products/overstock")}
+            >
+              <div className="icon-container">
+                <IoFileTrayFull color="#5D5353" size="1.5vw" />
+              </div>
+              <p>Check Over Stocks</p>
+              <IoChevronForwardSharp
+                style={{ marginLeft: "8.7vw" }}
+                color="#5D5353"
+                size="1.5vw"
+              />
+            </div>
+            <div className="profile-links" onClick={() => navigate("/login")}>
+              <div className="icon-container">
+                <IoLogOut color="#5D5353" size="1.5vw" />
+              </div>
+              <p>Log Out</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {isOpen && (
         <div>
           <div className="notification-container" ref={ref}>
@@ -277,11 +409,18 @@ export default function Dashboard() {
                   key={index}
                   onClick={() => handleItemClick(item.id)}
                 >
-                  <img
-                    className="image-size"
-                    src={item.image}
-                    alt={item.title}
-                  />
+                  <div className="notif-item-image">
+                    <img
+                      style={{
+                        height: "5vw",
+                        width: "5vw",
+                        objectFit: "cover",
+                      }}
+                      src={item.image}
+                      alt={item.title}
+                    />
+                  </div>
+
                   <div className="item-txt">
                     <p style={{ color: "#5D5353" }}>{item.title}</p>
                     <p
@@ -328,8 +467,18 @@ export default function Dashboard() {
           <IoNotificationsOutline color="#7E7E7E" size="2vw" />
         </div>
 
-        <div className="filter-btn" onClick={handleLogout}>
-          <IoPersonCircleOutline color="#7E7E7E" size="2vw" />
+        <div
+          ref={profileButtonRef}
+          className="filter-btn"
+          onClick={handleProfileClick}
+        >
+          <div className="image-wrapper">
+            <img
+              style={{ height: "8vw", width: "4vw", objectFit: "cover" }}
+              src={userImage}
+              alt=""
+            />
+          </div>
         </div>
       </div>
 
@@ -341,7 +490,7 @@ export default function Dashboard() {
               <p>products</p>
             </div>
             <div className="data-txt">
-              <h1>99</h1>
+              <h1>{items.length}</h1>
             </div>
           </div>
 
@@ -360,7 +509,7 @@ export default function Dashboard() {
               <p>of Stock</p>
             </div>
             <div className="data-txt">
-              <h1>0</h1>
+              <h1>{outOfStock}</h1>
             </div>
           </div>
 
@@ -379,7 +528,7 @@ export default function Dashboard() {
               <p>Overstock</p>
             </div>
             <div className="data-txt">
-              <h1>150</h1>
+              <h1>{overStock}</h1>
             </div>
           </div>
 
