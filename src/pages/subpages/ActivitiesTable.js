@@ -117,7 +117,7 @@ export default function ActivitiesTable({
   };
 
   return (
-    <div className="table-container">
+    <div className="table-wrapper">
       <div>
         <table className="table">
           <thead>
