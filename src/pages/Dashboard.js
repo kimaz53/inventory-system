@@ -206,6 +206,11 @@ export default function Dashboard() {
     setIsOpen(!isOpen);
   };
 
+  const handleNotifBallClick = () => {
+    setIsOpen(!isOpen);
+    setProfileClicked(!profileClicked);
+  };
+
   return (
     <div className="stock-container">
       {profileClicked && (
@@ -249,7 +254,7 @@ export default function Dashboard() {
                     justifyContent: "center",
                   }}
                   className="notifBall"
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={handleNotifBallClick}
                 >
                   {data.length}
                 </div>
