@@ -7,13 +7,14 @@ const storedIsLogin = localStorage.getItem("isLogin");
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["selectedItemId", "data", "dataz"],
+  whitelist: ["selectedItemId", "data", "dataz", "user_image"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const initialState = {
   selectedItemId: null,
+  user_image: "",
   username: "",
   password: "",
   isLogin: storedIsLogin === "true",
@@ -29,6 +30,7 @@ function rootReducer(state = initialState, action) {
       localStorage.setItem("isLogin", "true");
       return {
         ...state,
+        user_image: action.payload.user_image,
         username: action.payload.username,
         password: action.payload.password,
         isLogin: true,
@@ -41,6 +43,7 @@ function rootReducer(state = initialState, action) {
       localStorage.removeItem("isLogin");
       return {
         ...state,
+        user_image: "",
         username: "",
         password: "",
         isLogin: false,
