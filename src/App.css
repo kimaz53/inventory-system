@@ -2098,7 +2098,7 @@ table {
 
 .edit-row,
 .edit-category {
-    width: 7vw;
+    width: 100%;
     height: 1.5vw;
     font-size: 1vw;
     outline: none;
@@ -2205,6 +2205,7 @@ table {
     flex-direction: row;
     align-items: center;
     padding: 0.5vw 0vw 0vw 1.5vw;
+    position: relative;
 }
 
 .profile-links p {
@@ -2250,7 +2251,222 @@ table {
     margin-top: 1vw;
 }
 
-.profile-links:hover {
+.btns-wrap:hover {
+    cursor: pointer;
+}
+
+.profile-links-bg-color {
+    margin-left: -0.5vw;
+    width: 23vw;
+    height: 3.5vw;
+    position: absolute;
+    border-radius: 0.5vw;
+    z-index: -1;
+}
+
+.profile-links:hover .profile-links-bg-color {
     cursor: pointer;
     background-color: #EDF3EC;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 300px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 0.78vw rgba(0, 0, 0, 0.2);
+    align-items: center;
+    justify-content: center;
+}
+
+.login-btn {
+    width: 100px;
+    height: 40px;
+    border: 2px solid #47A515;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #47A515;
+    margin-right: -300px;
+}
+
+.login-btn p {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.uname-lbl,
+.pword-lbl {
+    font-weight: 500;
+    font-size: 17px;
+    color: #5D5353;
+}
+
+.uname-input,
+.pword-input {
+    border: none;
+    outline: none;
+    color: #8B8B8B;
+    font-weight: 500;
+    font-size: 15px;
+    border-bottom: 3px solid #D9D9D9;
+    border-radius: 2px;
+    height: 40px;
+    width: 400px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.uname-input::placeholder,
+.pword-input::placeholder {
+    color: #8B8B8B;
+}
+
+.uname-wrapper,
+.pword-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center
+}
+
+.warning-svg {
+    margin-right: 10px;
+}
+
+.warning-desc {
+    font-size: 20px;
+    font-weight: 500;
+    color: #000000;
+}
+
+.pword-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pword-show-hide:hover {
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    cursor: pointer;
+}
+
+.invalid-credentials {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 420px;
+}
+
+.invalid-input {
+    border-bottom: 3px solid #DD1F58;
+}
+
+.login-btn:focus {
+    border: 2px solid #47A515;
+    outline: #47A515;
+}
+
+@media screen and (max-width: 500px) {
+    .login-wrapper {
+        margin-top: -75px;
+    }
+
+    .login-container {
+        display: flex;
+        flex-direction: column;
+        width: 350px;
+        height: 200px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 0.78vw rgba(0, 0, 0, 0.2);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-btn {
+        width: 70px;
+        height: 30px;
+        border: 2px solid #47A515;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #47A515;
+        margin-right: -230px;
+    }
+
+    .login-btn p {
+        font-weight: 600;
+        font-size: 12.5px;
+    }
+
+    .uname-lbl,
+    .pword-lbl {
+        font-weight: 500;
+        font-size: 14px;
+        color: #5D5353;
+    }
+
+    .uname-input,
+    .pword-input {
+        border: none;
+        outline: none;
+        color: #8B8B8B;
+        font-weight: 500;
+        font-size: 12.5px;
+        border-bottom: 3px solid #D9D9D9;
+        border-radius: 2px;
+        height: 25px;
+        width: 300px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    .uname-input::placeholder,
+    .pword-input::placeholder {
+        color: #8B8B8B;
+    }
+
+    .uname-wrapper,
+    .pword-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login-title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center
+    }
+
+    .warning-svg {
+        margin-right: 5px;
+    }
+
+    .warning-desc {
+        font-size: 13.5px;
+        font-weight: 500;
+        color: #000000;
+    }
+
+    .invalid-credentials {
+        font-size: 12.5px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 330px;
+    }
 }
