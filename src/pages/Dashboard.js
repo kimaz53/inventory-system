@@ -279,6 +279,7 @@ export default function Dashboard() {
                 color="#5D5353"
                 size="1.5vw"
               />
+              <div className="profile-links-bg-color" />
             </div>
             <div
               className="profile-links"
@@ -293,12 +294,14 @@ export default function Dashboard() {
                 color="#5D5353"
                 size="1.5vw"
               />
+              <div className="profile-links-bg-color" />
             </div>
             <div className="profile-links" onClick={() => navigate("/login")}>
               <div className="icon-container">
                 <IoLogOut color="#5D5353" size="1.5vw" />
               </div>
               <p>Log Out</p>
+              <div className="profile-links-bg-color" />
             </div>
           </div>
         </div>
