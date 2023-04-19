@@ -26,7 +26,7 @@ export default function NoStock() {
     const fetchItems = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3001/products/items/stocks"
+          "https://inventory-db-api-request.onrender.com/users/products/items/stocks"
         );
 
         const haveProducts = res.data.some((item) => item.stocks === 0);
@@ -81,7 +81,7 @@ export default function NoStock() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/products/items");
+        const res = await axios.get("https://inventory-db-api-request.onrender.com/users/products/items");
         setItems(res.data);
       } catch (err) {
         console.log(err);
@@ -109,7 +109,7 @@ export default function NoStock() {
               )
             ) {
               await axios.put(
-                `http://localhost:3001/products/stocks/update/${selectedItem}`,
+                `https://inventory-db-api-request.onrender.com/users/products/stocks/update/${selectedItem}`,
                 {
                   remainingStocks: qty,
                   productId: items.find(

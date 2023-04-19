@@ -16,11 +16,11 @@ export default function Login() {
   useEffect(() => {
     dispatch({ type: "LOGOUT" });
   }, [dispatch]);
-
+  
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/users");
+        const res = await axios.get("https://inventory-db-api-request.onrender.com/users/users");
         setData(res.data);
       } catch (err) {
         console.log(err);
