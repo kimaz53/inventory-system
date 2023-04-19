@@ -81,7 +81,9 @@ export default function NoStock() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get("https://inventory-db-api-request.onrender.com/products/items");
+        const res = await axios.get(
+          "https://inventory-db-api-request.onrender.com/products/items"
+        );
         setItems(res.data);
       } catch (err) {
         console.log(err);
@@ -135,7 +137,6 @@ export default function NoStock() {
                   ).total_stocks,
                 }
               );
-              window.location.reload();
             }
           } catch (err) {
             console.log(err);
