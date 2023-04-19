@@ -84,14 +84,16 @@ export default function ActivitiesTable({
 
   const filteredUniqueData =
     Object.keys(checkedItems).length === 0
-      ? uniqueData.filter((item) => {
-          const values = Object.values(item).map((value) =>
-            value.toString().toLowerCase()
-          );
-          return values.some((value) =>
-            value.includes(searchResult.toLowerCase())
-          );
-        })
+      ? uniqueData
+          .filter((item) => {
+            const values = Object.values(item).map((value) =>
+              value.toString().toLowerCase()
+            );
+            return values.some((value) =>
+              value.includes(searchResult.toLowerCase())
+            );
+          })
+          .sort((a, b) => b.id - a.id) // Sort by ID in descending order
       : uniqueData
           .filter((item) => checkedItems[item.category])
           .filter((item) => {
@@ -105,7 +107,8 @@ export default function ActivitiesTable({
           .filter((item) => {
             const itemDate = formatDate(item.date_updated);
             return itemDate >= startDate && itemDate <= endDate;
-          });
+          })
+          .sort((a, b) => b.id - a.id); // Sort by ID in descending order
 
   const [expandedRows, setExpandedRows] = useState({});
 
