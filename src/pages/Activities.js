@@ -23,6 +23,11 @@ function formatDate(dateStr) {
 export default function Activities() {
   const [searchResult, setSearchResult] = useState("");
 
+  const [selectedButton, setSelectedButton] = useState(
+    localStorage.getItem("selectedButton") || "day"
+  );
+  const rangeType = useState(localStorage.getItem("rangeType") || "day");
+
   const handleSearchResultChange = (event) => {
     setSearchResult(event.target.value);
   };
@@ -108,13 +113,23 @@ export default function Activities() {
 
   const [openCalendar, setOpenCalendar] = useState(false);
 
-  const [dateRange, setDateRange] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
+  const [dateRange, setDateRange] = useState(() => {
+    const dateRangeString = localStorage.getItem("dateRange");
+    return dateRangeString
+      ? JSON.parse(dateRangeString)
+      : [
+          {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: "selection",
+          },
+        ];
+  });
+
+  useEffect(() => {
+    const dateRangeString = JSON.stringify(dateRange);
+    localStorage.setItem("dateRange", dateRangeString);
+  }, [dateRange]);
 
   const handleDateChange = (ranges) => {
     setDateRange([ranges.selection]);
@@ -228,7 +243,10 @@ export default function Activities() {
     ]);
   }
 
-  const [selectedButton, setSelectedButton] = useState("today");
+  useEffect(() => {
+    localStorage.setItem("selectedButton", selectedButton);
+    localStorage.setItem("rangeType", rangeType);
+  }, [selectedButton, rangeType]);
 
   return (
     <div className="product-container">
