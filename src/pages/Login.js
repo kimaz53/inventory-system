@@ -20,7 +20,7 @@ export default function Login() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get("https://inventory-db-api-request.onrender.com/users/users");
+        const res = await axios.get("https://inventory-db-api-request.onrender.com/users");
         setData(res.data);
       } catch (err) {
         console.log(err);

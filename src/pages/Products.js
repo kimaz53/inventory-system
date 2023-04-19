@@ -75,7 +75,7 @@ export default function Products() {
 
     try {
       if (window.confirm("Are you sure you want to add this Item?")) {
-        await axios.post("https://inventory-db-api-request.onrender.com/users/items", items);
+        await axios.post("https://inventory-db-api-request.onrender.com/items", items);
         window.location.reload();
       }
     } catch (err) {

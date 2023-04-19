@@ -11,7 +11,7 @@ export default function ProductsTable({ checkedItems, searchResult }) {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get("https://inventory-db-api-request.onrender.com/users/products/items");
+        const res = await axios.get("https://inventory-db-api-request.onrender.com/products/items");
         setItems(res.data);
       } catch (err) {
         console.log(err);
@@ -22,7 +22,7 @@ export default function ProductsTable({ checkedItems, searchResult }) {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete("https://inventory-db-api-request.onrender.com/users/items/" + id);
+      await axios.delete("https://inventory-db-api-request.onrender.com/items/" + id);
       window.location.reload();
     } catch (err) {
       console.log(err);

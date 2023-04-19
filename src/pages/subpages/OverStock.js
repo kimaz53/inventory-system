@@ -32,7 +32,7 @@ export default function OverStock() {
     const fetchItems = async () => {
       try {
         const res = await axios.get(
-          "https://inventory-db-api-request.onrender.com/users/products/items/stocks"
+          "https://inventory-db-api-request.onrender.com/products/items/stocks"
         );
         if (!Array.isArray(res.data)) {
           throw new Error("Unexpected API response");
@@ -94,7 +94,7 @@ export default function OverStock() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get("https://inventory-db-api-request.onrender.com/users/products/items");
+        const res = await axios.get("https://inventory-db-api-request.onrender.com/products/items");
         setItems(res.data);
       } catch (err) {
         console.log(err);
@@ -122,7 +122,7 @@ export default function OverStock() {
               )
             ) {
               await axios.put(
-                `https://inventory-db-api-request.onrender.com/users/products/stocks/update/${selectedItem}`,
+                `https://inventory-db-api-request.onrender.com/products/stocks/update/${selectedItem}`,
                 {
                   remainingStocks: qty,
                   productId: items.find(

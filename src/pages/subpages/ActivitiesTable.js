@@ -26,7 +26,7 @@ export default function ActivitiesTable({
     const fetchItems = async () => {
       try {
         const res = await axios.get(
-          `https://inventory-db-api-request.onrender.com/users/products/items/activities?startDate=${startDate}&endDate=${endDate}`
+          `https://inventory-db-api-request.onrender.com/products/items/activities?startDate=${startDate}&endDate=${endDate}`
         );
         setData(res.data);
       } catch (err) {

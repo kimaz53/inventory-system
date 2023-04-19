@@ -44,7 +44,7 @@ export default function Dashboard() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://inventory-db-api-request.onrender.com/users/products/items/stocks"
+        "https://inventory-db-api-request.onrender.com/products/items/stocks"
       );
       setData(response.data);
       setFilteredData(response.data);
@@ -140,7 +140,7 @@ export default function Dashboard() {
     const fetchItems = async () => {
       try {
         const response = await axios.get(
-          "https://inventory-db-api-request.onrender.com/users/products/items"
+          "https://inventory-db-api-request.onrender.com/products/items"
         );
         const result = response.data;
 
@@ -196,7 +196,7 @@ export default function Dashboard() {
   const handleMarkAllAsRead = async () => {
     setUnreadOnly(false);
     try {
-      await axios.put("https://inventory-db-api-request.onrender.com/users/read");
+      await axios.put("https://inventory-db-api-request.onrender.com/read");
       fetchData();
     } catch (err) {
       console.log(err);
@@ -207,7 +207,7 @@ export default function Dashboard() {
     dispatch({ type: "SET_SELECTED_ITEM_ID", payload: id });
     setSelectedItemId(id);
     try {
-      await axios.put("https://inventory-db-api-request.onrender.com/users/products/items/stocks/" + id);
+      await axios.put("https://inventory-db-api-request.onrender.com/products/items/stocks/" + id);
       fetchData();
     } catch (err) {
       console.log(err);

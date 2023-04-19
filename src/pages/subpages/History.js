@@ -19,7 +19,7 @@ export default function History({ checkedItems, searchResult }) {
     const fetchItems = async () => {
       try {
         const res = await axios.get(
-          "https://inventory-db-api-request.onrender.com/users/products/items/history"
+          "https://inventory-db-api-request.onrender.com/products/items/history"
         );
         setData(res.data);
       } catch (err) {
