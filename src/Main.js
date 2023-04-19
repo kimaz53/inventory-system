@@ -40,7 +40,7 @@ function Main() {
   return (
     <>
       {isLoggedIn === true ? (
-        <div className="canvas">
+        <div className="container">
           <div
             className="content-wrapper"
             style={{ height: contentWrapperHeight }}
