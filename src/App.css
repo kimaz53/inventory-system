@@ -2,7 +2,11 @@
     box-sizing: border-box;
 }
 
-.canvas {
+*:focus {
+    outline: 0.1vw solid #47A515;
+}
+
+.container {
     width: 100%;
     background: #FFFFFF;
     display: flex;
@@ -491,10 +495,25 @@
     color: #FFFFFF;
 }
 
+.date-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.date-wrapper:hover {
+    cursor: pointer;
+}
+
 .date-wrapper h1 {
-    font-size: 2vw;
+    font-size: 1.5vw;
     color: #7E7E7E;
     margin: 0.5vw 0vw 0.5vw 0vw;
+    max-width: 35vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .month-btn {
@@ -789,6 +808,7 @@
     padding: 0vw 3vw 0vw 3vw;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    height: 100%;
 }
 
 .parent-div {
@@ -2378,6 +2398,65 @@ table {
     outline: #47A515;
 }
 
+.pie-chart-wrapper {
+    width: 27vw;
+    height: 15vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.parent-divs {
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sub-parents {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.sub-parents p {
+    color: #7E7E7E;
+    font-size: 15px;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media screen and (max-width: 375px) {}
+
+@media screen and (max-width: 414px) {}
+
+
+@media screen and (max-width: 1920px) and (min-width: 1366px) {
+    .sub-parents {
+        margin-left: 4vw;
+    }
+    .sub-parents p {
+        margin-left: -10vw;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .pie-chart-wrapper {
+        width: 50vw;
+        height: 50vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 280px) {}
+
+@media screen and (max-width: 1280px) {}
+
 @media screen and (max-width: 500px) {
     .login-wrapper {
         margin-top: -75px;
@@ -2469,4 +2548,5 @@ table {
         justify-content: space-between;
         width: 330px;
     }
+
 }
