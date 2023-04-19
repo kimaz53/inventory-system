@@ -17,6 +17,7 @@ import ColorThief from "colorthief";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import Chart from "react-apexcharts";
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -53,14 +54,97 @@ export default function Dashboard() {
   };
 
   const [items, setItems] = useState([]);
+
+  const aggregatedData = items.reduce((acc, item) => {
+    if (acc.hasOwnProperty(item.category)) {
+      acc[item.category] += item.remaining_stocks;
+    } else {
+      acc[item.category] = item.remaining_stocks;
+    }
+    return acc;
+  }, {});
+
+  const categories = Object.keys(aggregatedData);
+  const remainingStocks = Object.values(aggregatedData);
+
+  const chartData = {
+    series: remainingStocks,
+    options: {
+      chart: {
+        type: "donut",
+        width: 450,
+        height: 450,
+      },
+      labels: categories,
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: "100%",
+              height: 250,
+            },
+            legend: {
+              position: "bottom",
+            },
+          },
+        },
+      ],
+
+      dataLabels: {
+        formatter: function (val, opts) {
+          const seriesIndex = opts.seriesIndex;
+          const seriesData = opts.w.config.series[seriesIndex];
+          return seriesData;
+        },
+      },
+      plotOptions: {
+        pie: {
+          donut: {
+            size: "40%",
+          },
+          minAngleToShowLabel: 10,
+        },
+      },
+      colors: [
+        "#3366CC",
+        "#DC3912",
+        "#FF9900",
+        "#109618",
+        "#990099",
+        "#0099C6",
+        "#DD4477",
+        "#66AA00",
+        "#B82E2E",
+        "#316395",
+      ],
+      strokeColors: [
+        "#F2F2F2",
+        "#F2F2F2",
+        "#F2F2F2",
+        "#F2F2F2",
+        "#F2F2F2",
+        "#F2F2F2",
+        "#F2F2F2",
+        "#F2F2F2",
+        "#F2F2F2",
+        "#F2F2F2",
+      ],
+    },
+  };
+
   const outOfStock = items.filter((item) => item.remaining_stocks === 0).length;
   const overStock = items.filter((item) => item.remaining_stocks > 50).length;
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/products/items");
-        setItems(res.data);
+        const response = await axios.get(
+          "http://localhost:3001/products/items"
+        );
+        const result = response.data;
+
+        setItems(result);
       } catch (err) {
         console.log(err);
       }
@@ -545,6 +629,21 @@ export default function Dashboard() {
             <Link className="more-products-btn" to="/products/overstock">
               More
             </Link>
+          </div>
+        </div>
+
+        <div className="parent-divs">
+          <div className="sub-parents">
+            <p>Products count by Category</p>
+            <div className="pie-chart-wrapper">
+              <Chart
+                options={chartData.options}
+                series={chartData.series}
+                type="donut"
+                width={chartData.options.chart.width}
+                height={chartData.options.chart.height}
+              />
+            </div>
           </div>
         </div>
       </div>
