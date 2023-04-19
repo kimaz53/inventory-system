@@ -93,7 +93,7 @@ export default function ActivitiesTable({
               value.includes(searchResult.toLowerCase())
             );
           })
-          .sort((a, b) => b.id - a.id) // Sort by ID in descending order
+          .sort((a, b) => b.id - a.id)
       : uniqueData
           .filter((item) => checkedItems[item.category])
           .filter((item) => {
@@ -108,7 +108,7 @@ export default function ActivitiesTable({
             const itemDate = formatDate(item.date_updated);
             return itemDate >= startDate && itemDate <= endDate;
           })
-          .sort((a, b) => b.id - a.id); // Sort by ID in descending order
+          .sort((a, b) => b.id - a.id);
 
   const [expandedRows, setExpandedRows] = useState({});
 
