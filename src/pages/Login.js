@@ -40,7 +40,7 @@ export default function Login() {
     );
 
     if (username.trim() === "" || password.trim() === "") {
-      window.alert("Enter credentials. Check your fields and Try again.");
+      window.alert("Enter credentials. Check empty fields and Try again.");
       return;
     }
 
