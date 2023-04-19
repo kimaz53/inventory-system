@@ -16,11 +16,13 @@ export default function Login() {
   useEffect(() => {
     dispatch({ type: "LOGOUT" });
   }, [dispatch]);
-  
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get("https://inventory-db-api-request.onrender.com/users");
+        const res = await axios.get(
+          "https://inventory-db-api-request.onrender.com/users"
+        );
         setData(res.data);
       } catch (err) {
         console.log(err);
@@ -59,7 +61,9 @@ export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const handlePasswordVisibility = () => {
-    loginBtnRef.current.focus();
+    if (loginBtnRef.current) {
+      loginBtnRef.current.focus();
+    }
     setPasswordVisible(!passwordVisible);
   };
 
