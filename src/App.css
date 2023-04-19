@@ -2,10 +2,6 @@
     box-sizing: border-box;
 }
 
-*:focus {
-    outline: 0.1vw solid #47A515;
-}
-
 .container {
     width: 100%;
     background: #FFFFFF;
@@ -2428,12 +2424,6 @@ table {
     align-items: center;
 }
 
-
-@media screen and (max-width: 375px) {}
-
-@media screen and (max-width: 414px) {}
-
-
 @media screen and (max-width: 1920px) and (min-width: 1366px) {
     .sub-parents {
         margin-left: 4vw;
@@ -2452,10 +2442,6 @@ table {
         justify-content: center;
     }
 }
-
-@media screen and (max-width: 280px) {}
-
-@media screen and (max-width: 1280px) {}
 
 @media screen and (max-width: 500px) {
     .login-wrapper {

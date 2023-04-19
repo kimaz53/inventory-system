@@ -16,10 +16,13 @@ const EditableRow = ({ item, handleInputChange, handleCancelClick }) => {
     e.preventDefault();
     try {
       if (window.confirm("Are you sure you want to save changes?")) {
-        await axios.put(`https://inventory-db-api-request.onrender.com/items/${item.product_id}`, {
-          ...item,
-          totalStocks: item.total_stocks,
-        });
+        await axios.put(
+          `https://inventory-db-api-request.onrender.com/items/${item.product_id}`,
+          {
+            ...item,
+            totalStocks: item.total_stocks,
+          }
+        );
         window.location.reload();
       }
     } catch (err) {
