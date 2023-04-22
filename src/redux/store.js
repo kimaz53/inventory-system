@@ -7,7 +7,7 @@ const storedIsLogin = localStorage.getItem("isLogin");
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["selectedItemId", "data", "dataz", "user_image"],
+  whitelist: ["selectedItemId", "data", "dataz", "user_image", "searchInput"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -20,6 +20,7 @@ const initialState = {
   isLogin: storedIsLogin === "true",
   data: [],
   dataz: [],
+  searchInput: "",
 };
 
 function rootReducer(state = initialState, action) {
@@ -39,6 +40,8 @@ function rootReducer(state = initialState, action) {
       return { ...state, data: action.payload };
     case "SET_OVER_STOCK_DATA":
       return { ...state, dataz: action.payload };
+    case "SET_SEARCH_INPUT":
+      return { ...state, searchInput: action.payload };
     case "LOGOUT":
       localStorage.removeItem("isLogin");
       return {

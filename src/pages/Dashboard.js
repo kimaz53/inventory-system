@@ -207,7 +207,10 @@ export default function Dashboard() {
     dispatch({ type: "SET_SELECTED_ITEM_ID", payload: id });
     setSelectedItemId(id);
     try {
-      await axios.put("https://inventory-db-api-request.onrender.com/products/items/stocks/" + id);
+      await axios.put(
+        "https://inventory-db-api-request.onrender.com/products/items/stocks/" +
+          id
+      );
       fetchData();
     } catch (err) {
       console.log(err);
@@ -295,8 +298,88 @@ export default function Dashboard() {
     setProfileClicked(!profileClicked);
   };
 
+  const [openSuggestion, setOpenSuggestion] = useState(false);
+
+  const [searchInput, setSearchInput] = useState("");
+
+  const handleSearchInput = (e) => {
+    const inputValue = e.target.value;
+    setSearchInput(inputValue);
+    if (inputValue !== "") {
+      setOpenSuggestion(true);
+    } else {
+      setOpenSuggestion(false);
+    }
+  };
+
+  const suggestionButtonRef = useRef(null);
+  const suggestionRef = useRef(null);
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (
+        suggestionRef.current &&
+        !suggestionRef.current.contains(e.target) &&
+        !suggestionButtonRef.current.contains(e.target)
+      ) {
+        setOpenSuggestion(false);
+      }
+    };
+
+    document.body.addEventListener("mousedown", handler);
+    return () => {
+      document.body.removeEventListener("mousedown", handler);
+    };
+  });
+
+  const handleItemSelect = (item) => {
+    dispatch({ type: "SET_SEARCH_INPUT", payload: item });
+    navigate("/products");
+  };
+
   return (
     <div className="stock-container">
+      {openSuggestion && (
+        <div className="search-suggestion-container" ref={suggestionRef}>
+          <div className="search-result-container">
+            {items
+              .filter((item) =>
+                item.item.toLowerCase().includes(searchInput.toLowerCase())
+              )
+              .map((item) => (
+                <div
+                  key={item.item_code}
+                  className="search-result-item"
+                  onClick={() => handleItemSelect(item.item)}
+                >
+                  <img
+                    src={item.product_image}
+                    className="search-result-img"
+                    alt=""
+                  />
+                  <div>
+                    <p style={{ color: "#5D5353", fontWeight: "600" }}>
+                      {item.item}
+                    </p>
+                    <p
+                      style={{
+                        marginTop: "-1vw",
+                        color: "#7E7E7E",
+                        fontSize: "1vw",
+                      }}
+                    >
+                      Stocks: {item.remaining_stocks}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            {items.filter((item) =>
+              item.item.toLowerCase().includes(searchInput.toLowerCase())
+            ).length === 0 && setOpenSuggestion(false)}
+          </div>
+        </div>
+      )}
+
       {profileClicked && (
         <div ref={profileRef} className="profile-wrapper">
           <div className="wrap-profile">
@@ -546,6 +629,9 @@ export default function Dashboard() {
             id="myInput"
             placeholder="Search"
             className="search-input"
+            value={searchInput}
+            onChange={handleSearchInput}
+            ref={suggestionButtonRef}
           />
           <IoSearchOutline className="search-icon" color="#7E7E7E" size="2vw" />
         </div>

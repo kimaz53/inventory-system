@@ -13,6 +13,7 @@ import CheckboxList from "./CheckboxList";
 import SelectedItemsContainer from "./SelectedItemsContainer";
 import RadioList from "./RadioList";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Products() {
   const [showHistory, setShowHistory] = useState(false);
@@ -47,7 +48,15 @@ export default function Products() {
     }));
   };
 
-  const [searchResult, setSearchResult] = useState("");
+  const searchInput = useSelector((state) => state.searchInput);
+
+  const [searchResult, setSearchResult] = useState(searchInput);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: "SET_SEARCH_INPUT", payload: "" });
+  }, [dispatch]);
 
   const handleSearchResultChange = (event) => {
     setSearchResult(event.target.value);
