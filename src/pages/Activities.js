@@ -248,6 +248,11 @@ export default function Activities() {
     localStorage.setItem("rangeType", rangeType);
   }, [selectedButton, rangeType]);
 
+  const handleOpenCalendar = () => {
+    handleDateRangeClick();
+    setOpenCalendar(!openCalendar);
+  };
+
   return (
     <div className="product-container">
       {openCalendar && (
@@ -294,7 +299,7 @@ export default function Activities() {
           ref={calendarButtonRef}
           style={{ marginRight: "1vw" }}
           className="filter-btn"
-          onClick={() => setOpenCalendar(!openCalendar)}
+          onClick={handleOpenCalendar}
         >
           <CiCalendar color="#7E7E7E" size="2vw" strokeWidth={0.5} />
         </div>
