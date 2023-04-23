@@ -249,7 +249,43 @@ export default function Activities() {
   }, [selectedButton, rangeType]);
 
   const handleOpenCalendar = () => {
-    handleDateRangeClick();
+    const today = new Date();
+    let startDate, endDate;
+
+    switch (selectedButton) {
+      case "month":
+        startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        break;
+      case "week":
+        const weekStart = today.getDate() - today.getDay();
+        const weekEnd = weekStart + 6;
+        startDate = new Date(today.getFullYear(), today.getMonth(), weekStart);
+        endDate = new Date(today.getFullYear(), today.getMonth(), weekEnd);
+        break;
+      case "day":
+      default:
+        startDate = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate()
+        );
+        endDate = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate()
+        );
+        break;
+    }
+
+    setDateRange([
+      {
+        startDate,
+        endDate,
+        type: rangeType,
+        key: "selection",
+      },
+    ]);
     setOpenCalendar(!openCalendar);
   };
 
