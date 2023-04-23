@@ -194,10 +194,11 @@ export default function Dashboard() {
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   const handleMarkAllAsRead = async () => {
-    setUnreadOnly(false);
     try {
       await axios.put("https://inventory-db-api-request.onrender.com/read");
       fetchData();
+      setUnreadItems("");
+      setUnreadOnly(false);
     } catch (err) {
       console.log(err);
     }
